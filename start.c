@@ -17,10 +17,27 @@ bool cmp_tag1(struct tag1 a, struct tag1 b);
 bool cmp_li_tag1(struct list_tag1 *list, struct tag1 c);
 void print_li_tag1(struct list_tag1 *list);
 void add_unrepeated(struct list_tag1 *list, struct tag1 c);
+void print_scan(tag1_t tag_scan1, int32_t val);
+struct list_tag1* catch_tags(int n_cycles);
 
 int32_t main(void){
+	int i=1;
+	while(1){
+		struct list_tag1 *list = catch_tags(10);
+		system("clear");
+		printf("ciclo %d:\n",i);
+		i++;
+		print_li_tag1(list);
+		sleep(5);
+		free(list);
+	}
+	return 0;
+}
+
+struct list_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGOS de Tags, retorna uma lista encadeada de TAGS não repetidas, a quantidade de cilos determinar quantas vezes a leitora ira fazer um pacote de TAGS para aumentar a chance de todas as TAGS serem lidas
 	struct list_tag1 *list = malloc(sizeof(struct list_tag1));
 	list->h = malloc(1);
+	list->size = 0;
 	reader_t r1;
 	ip_stack_t stats;
 	int32_t val=0, i=0, j=0;
@@ -47,11 +64,9 @@ int32_t main(void){
 	if (val)
 	{
 		printf("Error creating reader session.\n");
-		return val;
+		return NULL;
 	}
-
-	for(;;)
-	{
+	for(int y=0; y<n_cycles;y++){
 		val = handle_rfid_module(&r1, &msg, &response, &tag_scan1, &tag_scan2, &tag_scan3, &tag_scan4, &tag_scan5, &tag_scan6);
 		if (val < 0)
 		{
@@ -61,51 +76,32 @@ int32_t main(void){
 			if (val)
 			{
 				printf("Error creating reader session.\n");
-				return val;
+				return NULL;
 			}
-		}
-		else
-		{
-			// Check if errors occurs
-			if(response.code == MSG_TYPE_ERROR)
-				printf("\nError on RFID module: %02x %02x %02x %02x", response.code, response.payload[0], response.payload[1], response.payload[2]);
-			else
-			{
-                if(val == 0)
-					printf("\nNenhuma TAG Lida.");
-				else
-				{
-					printf("\n%d tags inventoried.", val);
-                	for(i = 0; i < val; i++)
-                	{
-                	epclen = (tag_scan1.tags1[i].pc[0] >> 2);
-                    printf("\nPC: %.2x %.2x | ", tag_scan1.tags1[i].pc[0], tag_scan1.tags1[i].pc[1]);
-                    printf("EPC: ");
-                    for(j = 0; j < epclen; j++)
-                        printf("%.2x ", tag_scan1.tags1[i].epc[j]);
-					}
-                }
-                if(val>0){
-					for(i = 0; i < val; i++) {
-						if(list->size<1){
-							add_tag1(list,tag_scan1.tags1[i]);
-						} else {
-							add_unrepeated(list,tag_scan1.tags1[i]);
-						}
-					}
-					print_li_tag1(list);
+		} else if(response.code == MSG_TYPE_ERROR){
+			printf("\nError on RFID module: %02x %02x %02x %02x", response.code, response.payload[0], response.payload[1], response.payload[2]);
+		} else if(val==0){
+        } else {
+			for(i = 0; i < val; i++) {
+				if(list->size<1){
+					add_tag1(list,tag_scan1.tags1[i]);
+				} else {
+					add_unrepeated(list,tag_scan1.tags1[i]);
 				}
 			}
 		}
-		sleep(1000);
 	}
-	return 0;
+	return list;
 }
+
+
 
 void add_unrepeated(struct list_tag1 *list, struct tag1 c){ //Adiciona um Tag à lista se ela não for repetida
 	if(cmp_li_tag1(list,c))
 		add_tag1(list,c);
 }
+
+
 
 bool cmp_li_tag1(struct list_tag1 *list, struct tag1 c){ //Compara Lista com tag, retorna true caso não seja identificado a tag dentro da lista
 	for(int j = 0; j < list->size; j++){
@@ -115,6 +111,8 @@ bool cmp_li_tag1(struct list_tag1 *list, struct tag1 c){ //Compara Lista com tag
 	}
 	return true;
 }
+
+
 
 bool cmp_tag1(struct tag1 a, struct tag1 b){ //Compara duas tags, retorna true se forem iguais
 	uint16_t epclen = (a.pc[0] >> 2);
@@ -127,18 +125,24 @@ bool cmp_tag1(struct tag1 a, struct tag1 b){ //Compara duas tags, retorna true s
 	return true;
 }
 
+
+
 void add_tag1(struct list_tag1 *list,struct tag1 tag){ //Adiciona uma Tag na lista
 	list->size++;
 	list->h = realloc(list->h,sizeof(struct tag1)*list->size);
 	*(list->h-1+list->size) = tag;
 }
 
+
+
 void print_li_tag1(struct list_tag1 *list){ //Printa uma lista de Tags
-	printf("\n\nLista de Tags:\n\n");
+	printf("Lista de Tags:\n\n");
 	for(int i = 0; i<list->size;i++){
 		print_tag1(list->h+i,i);
 	}
 }
+
+
 
 void print_tag1(struct tag1 *h, int i){ //Printa uma tag
 	printf("\nTag %d:\nPC: %.2x %.2x | EPC: ", i+1, h->pc[0], h->pc[1]);
@@ -146,4 +150,24 @@ void print_tag1(struct tag1 *h, int i){ //Printa uma tag
 	for(int j = 0; j < epclen; j++)
 		printf("%.2x ", h->epc[j]);
 	printf("\n");
+}
+
+
+
+void print_scan(tag1_t tag_scan1, int32_t val){ //apenas armazenando um código excluido que pode vir a ser útil
+	int j, i;
+	if(val == 0)
+		printf("\nNenhuma TAG Lida.");
+	else
+	{
+		printf("\n%d tags inventoried.", val);
+		for(i = 0; i < val; i++)
+	{
+		uint16_t epclen = (tag_scan1.tags1[i].pc[0] >> 2);
+		printf("\nPC: %.2x %.2x | ", tag_scan1.tags1[i].pc[0], tag_scan1.tags1[i].pc[1]);
+		printf("EPC: ");
+		for(j = 0; j < epclen; j++)
+			printf("%.2x ", tag_scan1.tags1[i].epc[j]);
+		}
+	}
 }
