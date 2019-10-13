@@ -4,11 +4,19 @@
 #include "reader_api.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct list_tag1 {
 	struct tag1 *h;
 	int size;
 }list_tag1;
+
+void print_tag1(struct tag1 *h, int i);
+void add_tag1(struct list_tag1 *list,struct tag1 tag);
+bool cmp_tag1(struct tag1 a, struct tag1 b);
+bool cmp_li_tag1(struct list_tag1 *list, struct tag1 c);
+void print_li_tag1(struct list_tag1 *list);
+void add_unrepeated(struct list_tag1 *list, struct tag1 c);
 
 int32_t main(void){
 	struct list_tag1 *list = malloc(sizeof(struct list_tag1));
@@ -44,7 +52,6 @@ int32_t main(void){
 
 	for(;;)
 	{
-		sleep(3);
 		val = handle_rfid_module(&r1, &msg, &response, &tag_scan1, &tag_scan2, &tag_scan3, &tag_scan4, &tag_scan5, &tag_scan6);
 		if (val < 0)
 		{
@@ -81,17 +88,12 @@ int32_t main(void){
                 if(val>0){
 					for(i = 0; i < val; i++) {
 						if(list->size<1){
-							list->h = realloc(list->h,sizeof(struct tag1));
-							*(list->h) = tag_scan1.tags1[i];
-							printf("\n\n\nPeguei o primeiro!\n\n\nPC: %.2x %.2x | EPC: ",list->h->pc[0], list->h->pc[1]);
-							for(j = 0; j < epclen; j++)
-								printf("%.2x ", list->h->epc[j]);
-							printf("\n");
-							list->size++;
+							add_tag1(list,tag_scan1.tags1[i]);
 						} else {
-							
+							add_unrepeated(list,tag_scan1.tags1[i]);
 						}
 					}
+					print_li_tag1(list);
 				}
 			}
 		}
@@ -100,7 +102,48 @@ int32_t main(void){
 	return 0;
 }
 
+void add_unrepeated(struct list_tag1 *list, struct tag1 c){ //Adiciona um Tag à lista se ela não for repetida
+	if(cmp_li_tag1(list,c))
+		add_tag1(list,c);
+}
 
-void print_li(struct list_tag1 *list){
-	
+bool cmp_li_tag1(struct list_tag1 *list, struct tag1 c){ //Compara Lista com tag, retorna true caso não seja identificado a tag dentro da lista
+	for(int j = 0; j < list->size; j++){
+		if(cmp_tag1(c, *((list->h)+j))){
+			return false;
+		}
+	}
+	return true;
+}
+
+bool cmp_tag1(struct tag1 a, struct tag1 b){ //Compara duas tags, retorna true se forem iguais
+	uint16_t epclen = (a.pc[0] >> 2);
+	if((a.pc[0]!=b.pc[0])||(a.pc[1]!=b.pc[1]))
+			return false;
+	for(int k = 0; k < epclen; k++){
+		if(a.epc[k]!=b.epc[k])
+			return false;
+	}
+	return true;
+}
+
+void add_tag1(struct list_tag1 *list,struct tag1 tag){ //Adiciona uma Tag na lista
+	list->size++;
+	list->h = realloc(list->h,sizeof(struct tag1)*list->size);
+	*(list->h-1+list->size) = tag;
+}
+
+void print_li_tag1(struct list_tag1 *list){ //Printa uma lista de Tags
+	printf("\n\nLista de Tags:\n\n");
+	for(int i = 0; i<list->size;i++){
+		print_tag1(list->h+i,i);
+	}
+}
+
+void print_tag1(struct tag1 *h, int i){ //Printa uma tag
+	printf("\nTag %d:\nPC: %.2x %.2x | EPC: ", i+1, h->pc[0], h->pc[1]);
+	uint16_t epclen = (h->pc[0] >> 2);
+	for(int j = 0; j < epclen; j++)
+		printf("%.2x ", h->epc[j]);
+	printf("\n");
 }
