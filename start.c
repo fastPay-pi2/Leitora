@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+reader_t r1;
+
 typedef struct list_tag1 {
 	struct tag1 *h;
 	int size;
@@ -19,9 +21,11 @@ void print_li_tag1(struct list_tag1 *list);
 void add_unrepeated(struct list_tag1 *list, struct tag1 c);
 void print_scan(tag1_t tag_scan1, int32_t val);
 struct list_tag1* catch_tags(int n_cycles);
+void init();
 
 int32_t main(void){
 	int i=1;
+	init();
 	while(1){
 		struct list_tag1 *list = catch_tags(10);
 		system("clear");
@@ -38,7 +42,6 @@ struct list_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGOS 
 	struct list_tag1 *list = malloc(sizeof(struct list_tag1));
 	list->h = malloc(1);
 	list->size = 0;
-	reader_t r1;
 	ip_stack_t stats;
 	int32_t val=0, i=0, j=0;
 	_rcp msg, response;
@@ -49,8 +52,6 @@ struct list_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGOS 
 	tag4_t tag_scan4;
 	tag5_t tag_scan5;
 	tag6_t tag_scan6;
-	uint16_t epclen = 0;
-
 	msg.code = START_AUTO_READ2;
 	msg.payload_length[0] = 0x00;
 	msg.payload_length[1] = 0x05;
@@ -59,13 +60,7 @@ struct list_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGOS 
 	msg.payload[2] = 0x01; // Maximum elapsed time to tagging (sec)
 	msg.payload[3] = 0x00; // How many times reader perform inventory round [MSB]
 	msg.payload[4] = 0x14; // How many times reader perform inventory round [LSB]
-
-	val = Gen2ReaderCreate("192.168.5.10", &r1);
-	if (val)
-	{
-		printf("Error creating reader session.\n");
-		return NULL;
-	}
+	
 	for(int y=0; y<n_cycles;y++){
 		val = handle_rfid_module(&r1, &msg, &response, &tag_scan1, &tag_scan2, &tag_scan3, &tag_scan4, &tag_scan5, &tag_scan6);
 		if (val < 0)
@@ -94,7 +89,14 @@ struct list_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGOS 
 	return list;
 }
 
-
+void init(){ //inicia o socket???(a definir)
+	int32_t val = Gen2ReaderCreate("192.168.5.10", &r1);
+	if (val)
+	{
+		printf("Error creating reader session.\n");
+		exit(1);
+	}
+}
 
 void add_unrepeated(struct list_tag1 *list, struct tag1 c){ //Adiciona um Tag à lista se ela não for repetida
 	if(cmp_li_tag1(list,c))
