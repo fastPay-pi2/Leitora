@@ -11,20 +11,20 @@ reader_t r1;
 
 typedef struct node {
 	struct node *next;
-	struct tag1 h;
-}
+	struct tag1 tag;
+} node;
 
 typedef struct list_e_tag1{
 	struct node *head;
 	int size;
-}
+} list_e_tag1;
 
 typedef struct list_tag1 {
 	struct tag1 *h;
 	int size;
 }list_tag1;
 
-void print_tag1(struct tag1 *h, int i);
+void print_tag1(struct tag1 *h);
 void add_tag1(struct list_tag1 *list,struct tag1 tag);
 bool cmp_tag1(struct tag1 a, struct tag1 b);
 bool cmp_li_tag1(struct list_tag1 *list, struct tag1 c);
@@ -34,6 +34,8 @@ void print_scan(tag1_t tag_scan1, int32_t val);
 struct list_tag1* catch_tags(int n_cycles);
 void init();
 static void activate(GtkApplication* app, gpointer user_data);
+void add_e_tag1(struct list_e_tag1 *list, struct tag1 tag);
+void print_e_list(struct list_e_tag1 *list);
 
 int main(int argc, char **argv){
 	init();
@@ -43,7 +45,7 @@ int main(int argc, char **argv){
 	//~ g_signal_connect(app, "activate", G_CALLBACK (activate), NULL);
 	//~ status = g_application_run(G_APPLICATION (app), argc, argv);
 	//~ g_object_unref(app);
-	
+
 	int i=1;
 	while(1){
 		struct list_tag1 *list = catch_tags(10);
@@ -53,6 +55,7 @@ int main(int argc, char **argv){
 		print_li_tag1(list);
 		free(list->h);
 		free(list);
+		sleep(1000);
 	}
 	return 0;
 }
@@ -71,8 +74,10 @@ void cycle(){
 struct list_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGOS de Tags, retorna uma lista encadeada de TAGS não repetidas, a quantidade de cilos determinar quantas vezes a leitora ira fazer um pacote de TAGS para aumentar a chance de todas as TAGS serem lidas
 	struct list_tag1 *list = malloc(sizeof(struct list_tag1));
 	struct list_e_tag1 *list1 = malloc(sizeof(struct list_tag1));
+	list1->head=NULL;
 	list->h = malloc(1);
 	list->size = 0;
+	list1->size = 0;
 	ip_stack_t stats;
 	int32_t val=0, i=0, j=0;
 	_rcp msg, response;
@@ -110,6 +115,8 @@ struct list_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGOS 
         } else {
 			for(i = 0; i < val; i++) {
 				if(list->size<1){
+					add_e_tag1(list1,tag_scan1.tags1[i]);
+					print_e_list(list1);
 					add_tag1(list,tag_scan1.tags1[i]);
 				} else {
 					add_unrepeated(list,tag_scan1.tags1[i]);
@@ -118,6 +125,29 @@ struct list_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGOS 
 		}
 	}
 	return list;
+}
+
+void add_e_tag1(struct list_e_tag1 *list, struct tag1 tag){
+	struct node *n = malloc(sizeof(struct node));
+	n->next = list->head;
+	list->head = n;
+	n->tag = tag;
+}
+
+void print_e_list(struct list_e_tag1 *list){
+	if(list->head==NULL){
+		printf("Lista de TAGs Vazia!\n\n");
+	} else {
+		printf("Lista de Tags:\n\n");
+		struct node *n = list->head;
+		int i = 0;
+		while(n!=NULL){
+			printf("TAG %d",i);
+			print_tag1(&n->tag);
+			i++;
+			n = n->next;
+		}
+	}
 }
 
 void init(){ //inicia o socket???(a definir)
@@ -171,14 +201,15 @@ void add_tag1(struct list_tag1 *list,struct tag1 tag){ //Adiciona uma Tag na lis
 void print_li_tag1(struct list_tag1 *list){ //Printa uma lista de Tags
 	printf("Lista de Tags:\n\n");
 	for(int i = 0; i<list->size;i++){
-		print_tag1(list->h+i,i);
+		printf("\nTag %d",i+1);
+		print_tag1(list->h+i);
 	}
 }
 
 
 
-void print_tag1(struct tag1 *h, int i){ //Printa uma tag
-	printf("\nTag %d:\nPC: %.2x %.2x | EPC: ", i+1, h->pc[0], h->pc[1]);
+void print_tag1(struct tag1 *h){ //Printa uma tag
+	printf("\nPC: %.2x %.2x | EPC: ",h->pc[0], h->pc[1]);
 	uint16_t epclen = (h->pc[0] >> 2);
 	for(int j = 0; j < epclen; j++)
 		printf("%.2x ", h->epc[j]);
