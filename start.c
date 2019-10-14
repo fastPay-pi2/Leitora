@@ -5,8 +5,19 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <gtk/gtk.h>
 
 reader_t r1;
+
+typedef struct node {
+	struct node *next;
+	struct tag1 h;
+}
+
+typedef struct list_e_tag1{
+	struct node *head;
+	int size;
+}
 
 typedef struct list_tag1 {
 	struct tag1 *h;
@@ -17,29 +28,49 @@ void print_tag1(struct tag1 *h, int i);
 void add_tag1(struct list_tag1 *list,struct tag1 tag);
 bool cmp_tag1(struct tag1 a, struct tag1 b);
 bool cmp_li_tag1(struct list_tag1 *list, struct tag1 c);
-void print_li_tag1(struct list_tag1 *list);
+void print_li_tag1(struct list_tag1 *list);//`pkg-config --cflags gtk+-3.0`
 void add_unrepeated(struct list_tag1 *list, struct tag1 c);
 void print_scan(tag1_t tag_scan1, int32_t val);
 struct list_tag1* catch_tags(int n_cycles);
 void init();
+static void activate(GtkApplication* app, gpointer user_data);
 
-int32_t main(void){
-	int i=1;
+int main(int argc, char **argv){
 	init();
+	//~ GtkApplication *app;
+	//~ int status;
+	//~ app = gtk_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE);
+	//~ g_signal_connect(app, "activate", G_CALLBACK (activate), NULL);
+	//~ status = g_application_run(G_APPLICATION (app), argc, argv);
+	//~ g_object_unref(app);
+	
+	int i=1;
 	while(1){
 		struct list_tag1 *list = catch_tags(10);
 		system("clear");
 		printf("ciclo %d:\n",i);
 		i++;
 		print_li_tag1(list);
-		sleep(5);
+		free(list->h);
 		free(list);
 	}
 	return 0;
 }
 
+void cycle(){
+	int i=1;
+	struct list_tag1 *list = catch_tags(10);
+	system("clear");
+	printf("ciclo %d:\n",i);
+	i++;
+	print_li_tag1(list);
+	free(list->h);
+	free(list);
+}
+
 struct list_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGOS de Tags, retorna uma lista encadeada de TAGS não repetidas, a quantidade de cilos determinar quantas vezes a leitora ira fazer um pacote de TAGS para aumentar a chance de todas as TAGS serem lidas
 	struct list_tag1 *list = malloc(sizeof(struct list_tag1));
+	struct list_e_tag1 *list1 = malloc(sizeof(struct list_tag1));
 	list->h = malloc(1);
 	list->size = 0;
 	ip_stack_t stats;
@@ -172,4 +203,23 @@ void print_scan(tag1_t tag_scan1, int32_t val){ //apenas armazenando um código 
 			printf("%.2x ", tag_scan1.tags1[i].epc[j]);
 		}
 	}
+}
+
+static void activate(GtkApplication* app, gpointer user_data){
+	GtkWidget *window;
+	GtkWidget *button;
+	GtkWidget *button_box;
+	window = gtk_application_window_new(app);
+	gtk_window_set_title(GTK_WINDOW (window), "Window");
+	gtk_window_set_default_size(GTK_WINDOW (window), 200, 200);
+	
+	button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+	gtk_container_add(GTK_CONTAINER (window), button_box);
+	
+	button = gtk_button_new_with_label("cycle");
+	g_signal_connect(button, "clicked", G_CALLBACK(cycle), NULL);
+	g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_widget_destroy), window);
+	gtk_container_add(GTK_CONTAINER (button_box), button);
+	
+	gtk_widget_show_all(window);
 }
