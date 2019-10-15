@@ -157,6 +157,7 @@ struct list_e_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGO
 			printf("\nError on RFID module: %02x %02x %02x %02x", response.code, response.payload[0], response.payload[1], response.payload[2]);
 		} else if(val==0){
         } else {
+			te=1;
 			if(debug)
 				gettimeofday(&tv3, NULL);
 			for(i = 0; i < val; i++) {
@@ -169,7 +170,11 @@ struct list_e_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGO
 				}
 				if(debug){
 					gettimeofday(&tv2, NULL);
-					fprintf(log,"Tempo para adicionar tag da %dª leitura : %f s\n", te, (double)(tv2.tv_usec - tv1.tv_usec)/1000000 + (double)(tv2.tv_sec - tv1.tv_sec));
+					if(te>9){
+						fprintf(log,"Tempo para adicionar %dª tag: %f s\n", te, (double)(tv2.tv_usec - tv1.tv_usec)/1000000 + (double)(tv2.tv_sec - tv1.tv_sec));
+					} else {
+						fprintf(log,"Tempo para adicionar 0%dª tag: %f s\n", te, (double)(tv2.tv_usec - tv1.tv_usec)/1000000 + (double)(tv2.tv_sec - tv1.tv_sec));
+					}
 					te++;
 				}
 			}
