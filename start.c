@@ -8,10 +8,25 @@
 #include <gtk/gtk.h>
 #include <time.h>
 
-reader_t r1;
 FILE *log;
-struct timeval  tv1, tv2, tv3, tv4, tv5, tv6;
-#define debug true
+struct timeval  tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8;
+bool debug = true;
+int count=1, n_cycles = 3;
+
+typedef struct reader_s {
+	tag1_t tag_scan1;
+	tag2_t tag_scan2;
+	tag3_t tag_scan3;
+	tag4_t tag_scan4;
+	tag5_t tag_scan5;
+	tag6_t tag_scan6;
+	reader_t r1;
+	readerconfig_t r2;
+	_rcp msg, response;
+	
+}reader_s;
+
+struct reader_s r;
 
 typedef struct node {
 	struct node *next;
@@ -29,12 +44,7 @@ typedef struct list_tag1 {
 }list_tag1;
 
 void print_tag1(struct tag1 *h);
-//~ void add_tag1(struct list_tag1 *list,struct tag1 tag);
 bool cmp_tag1(struct tag1 a, struct tag1 b);
-//~ bool cmp_li_tag1(struct list_tag1 *list, struct tag1 c);
-//~ void print_li_tag1(struct list_tag1 *list);
-//~ void add_unrepeated(struct list_tag1 *list, struct tag1 c);
-//~ void print_scan(tag1_t tag_scan1, int32_t val);
 struct list_e_tag1* catch_tags(int n_cycles);
 void init();
 static void activate(GtkApplication* app, gpointer user_data);
@@ -44,153 +54,162 @@ bool cmp_li_e_tag1(struct list_e_tag1 *list, struct tag1 c);
 void add_li_e_unrepeated(struct list_e_tag1 *list, struct tag1 c);
 void del_e_li(struct list_e_tag1 *list);
 void open_log();
+int32_t handle_rfid_module_read2();
+struct list_e_tag1* catch_tags_debug(int n_cycles);
+void cycle();
+
+//-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
 
 int main(int argc, char **argv){
-	init();
 	if(debug){
 		log = fopen("log.txt","w+");
 		fprintf(log, "Log de Temporização:\n");
 		fclose(log);
 	}
+	init();
 	//~ GtkApplication *app;
 	//~ int status;
 	//~ app = gtk_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE);
 	//~ g_signal_connect(app, "activate", G_CALLBACK (activate), NULL);
 	//~ status = g_application_run(G_APPLICATION (app), argc, argv);
 	//~ g_object_unref(app);
-    struct timeval  tv1, tv2;
-	int i=1;
 	while(1){
-		if(debug){
-			open_log();
-			fprintf(log, "\n\nCiclo %d.",i);
-			fclose(log);
-		}
-		gettimeofday(&tv1, NULL);
-		struct list_e_tag1 *list = catch_tags(10);
-		gettimeofday(&tv2, NULL);
-		system("clear");
-		printf("ciclo %d:\n\n",i);
-		i++;
-		print_e_list(list);
-		del_e_li(list);
-		free(list);
-		printf("\nDigite 's' para fazer um novo ciclo:\n");
+		cycle();
+		printf("\nDigite para fazer um novo ciclo:\n");
 		while(getc(stdin)=='\n');
-		if(debug){
-			open_log();
-			fprintf(log, "\n\nTempo do ciclo: %f\n-----------------------------------------------------------\n-----------------------------------------------------------\n-----------------------------------------------------------\n\n\n",(double)(tv2.tv_usec - tv1.tv_usec)/1000000 + (double)(tv2.tv_sec - tv1.tv_sec));
-			fclose(log);
-		}
 		//sleep(2);
 	}
 	return 0;
 }
 
+//-------------------------------------------------------------------------------------- FIM MAIN --------------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------------- FIM MAIN --------------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------------- FIM MAIN --------------------------------------------------------------------------------------//
+
 void open_log(){
 	log = fopen("log.txt","r+");
 	if(log==NULL){
 		fprintf(stderr, "Erro ao tentar abrir a.txt.");
-		exit(1);
+		debug = false;
 	}
 	fseek(log, 0, SEEK_END);
 }
 
-//~ void cycle(){
-	//~ int i=1;
-	//~ struct list_e_tag1 *list = catch_tags(10);
-	//~ system("clear");
-	//~ printf("ciclo %d:\n\n",i);
-	//~ i++;
-	//~ print_e_list(list);
-	//~ del_e_li(list);
-	//~ free(list);
-//~ }
+void cycle(){
+	struct list_e_tag1 *list;
+	if(debug){
+		open_log();
+		fprintf(log, "\n\nCiclo %d.",count);
+		fclose(log);
+		gettimeofday(&tv7, NULL);
+		list = catch_tags_debug(n_cycles);
+	} else {
+		list = catch_tags(n_cycles);
+	}
+	if(debug)
+			gettimeofday(&tv8, NULL);
+	system("clear");
+	printf("ciclo %d:\n\n",count++);
+	print_e_list(list);
+	if(debug){
+		open_log();
+		fprintf(log, "\n\nTempo do ciclo: %f\n\n-----------------------------------------------------------\n-----------------------------------------------------------\n-----------------------------------------------------------\n\n\n",(double)(tv8.tv_usec - tv7.tv_usec)/1000000 + (double)(tv8.tv_sec - tv7.tv_sec));
+		fclose(log);
+	}
+	del_e_li(list);
+	free(list);
+}
 
 struct list_e_tag1* catch_tags(int n_cycles){ //Função para captura de CÓDIGOS de Tags, retorna uma lista encadeada de TAGS não repetidas, a quantidade de cilos determinar quantas vezes a leitora ira fazer um pacote de TAGS para aumentar a chance de todas as TAGS serem lidas
-	struct list_e_tag1 *list1 = malloc(sizeof(struct list_tag1));
-	if(debug)
-		open_log();
+	struct list_e_tag1 *list = malloc(sizeof(struct list_tag1));
 	int te = 1;
-	list1->head=NULL;
-	list1->size = 0;
+	list->head=NULL;
+	list->size = 0;
 	ip_stack_t stats;
 	int32_t val=0, i=0, j=0;
-	_rcp msg, response;
-	uint32_t pause;
-	tag1_t tag_scan1;
-	tag2_t tag_scan2;
-	tag3_t tag_scan3;
-	tag4_t tag_scan4;
-	tag5_t tag_scan5;
-	tag6_t tag_scan6;
-	msg.code = START_AUTO_READ2;
-	msg.payload_length[0] = 0x00;
-	msg.payload_length[1] = 0x05;
-	msg.payload[0] = 0x02; // Reserved
-	msg.payload[1] = TAGLIST_SIZE; //Max number of tags/packet must be TAGLIST_SIZE
-	msg.payload[2] = 0x01; // Maximum elapsed time to tagging (sec)
-	msg.payload[3] = 0x00; // How many times reader perform inventory round [MSB]
-	msg.payload[4] = 0x14; // How many times reader perform inventory round [LSB]
 	for(int y=0; y<n_cycles;y++){
-		if(debug){
-			gettimeofday(&tv1, NULL);
-			gettimeofday(&tv5, NULL);
-			
-		}
-		val = handle_rfid_module(&r1, &msg, &response, &tag_scan1, &tag_scan2, &tag_scan3, &tag_scan4, &tag_scan5, &tag_scan6);
-		if(debug){
-			gettimeofday(&tv2, NULL);
-			fprintf(log,"\n\n-----------------------------------------------------------\n\nTempo da %dª Leitura: %f s\n\n\n", y+1, (double)(tv2.tv_usec - tv1.tv_usec)/1000000 + (double)(tv2.tv_sec - tv1.tv_sec));
-		}
-		if (val < 0)
-		{
-			printf("\noperation failed! (%d)\n", val);
-			Gen2ReaderDestroy(&r1);
-			val = Gen2ReaderCreate("192.168.5.10", &r1);
-			if (val)
-			{
-				printf("Error creating reader session.\n");
-				return NULL;
-			}
-		} else if(response.code == MSG_TYPE_ERROR){
-			printf("\nError on RFID module: %02x %02x %02x %02x", response.code, response.payload[0], response.payload[1], response.payload[2]);
-		} else if(val==0){
-        } else {
+		val = handle_rfid_module_read2();
+		if(val>0){
 			te=1;
-			if(debug)
-				gettimeofday(&tv3, NULL);
+			for(i = 0; i < val; i++) {
+				if(list->size<1){
+					add_e_tag1(list,r.tag_scan1.tags1[i]);
+				} else {
+					add_li_e_unrepeated(list,r.tag_scan1.tags1[i]);
+				}
+			}
+		}
+	}
+	return list;
+}
+
+struct list_e_tag1* catch_tags_debug(int n_cycles){ //Função para captura de CÓDIGOS de Tags, retorna uma lista encadeada de TAGS não repetidas, a quantidade de cilos determinar quantas vezes a leitora ira fazer um pacote de TAGS para aumentar a chance de todas as TAGS serem lidas
+	struct list_e_tag1 *list = malloc(sizeof(struct list_tag1));
+	open_log();
+	int te;
+	list->head=NULL;
+	list->size = 0;
+	ip_stack_t stats;
+	int32_t val=0, i=0, j=0;
+	for(int y=0; y<n_cycles;y++){
+		gettimeofday(&tv1, NULL);
+		gettimeofday(&tv5, NULL);
+		val = handle_rfid_module_read2();
+		gettimeofday(&tv2, NULL);
+		fprintf(log,"\n\n-----------------------------------------------------------\n\nTempo da %dª Leitura: %f s\n\n\n", y+1, (double)(tv2.tv_usec - tv1.tv_usec)/1000000 + (double)(tv2.tv_sec - tv1.tv_sec));
+		if(val>0){
+			te=1;
+			gettimeofday(&tv3, NULL);
 			for(i = 0; i < val; i++) {
 				if(debug)
 					gettimeofday(&tv1, NULL);
-				if(list1->size<1){
-					add_e_tag1(list1,tag_scan1.tags1[i]);
+				if(list->size<1){
+					add_e_tag1(list,r.tag_scan1.tags1[i]);
 				} else {
-					add_li_e_unrepeated(list1,tag_scan1.tags1[i]);
+					add_li_e_unrepeated(list,r.tag_scan1.tags1[i]);
 				}
-				if(debug){
-					gettimeofday(&tv2, NULL);
-					if(te>9){
-						fprintf(log,"Tempo para adicionar %dª tag: %f s\n", te, (double)(tv2.tv_usec - tv1.tv_usec)/1000000 + (double)(tv2.tv_sec - tv1.tv_sec));
-					} else {
-						fprintf(log,"Tempo para adicionar 0%dª tag: %f s\n", te, (double)(tv2.tv_usec - tv1.tv_usec)/1000000 + (double)(tv2.tv_sec - tv1.tv_sec));
-					}
-					te++;
+				gettimeofday(&tv2, NULL);
+				if(te>9){
+					fprintf(log,"Tempo para adicionar %dª tag: %f s\n", te, (double)(tv2.tv_usec - tv1.tv_usec)/1000000 + (double)(tv2.tv_sec - tv1.tv_sec));
+				} else {
+					fprintf(log,"Tempo para adicionar 0%dª tag: %f s\n", te, (double)(tv2.tv_usec - tv1.tv_usec)/1000000 + (double)(tv2.tv_sec - tv1.tv_sec));
 				}
+				te++;
 			}
-			if(debug){
-				gettimeofday(&tv4, NULL);
-				fprintf(log,"\n\nTempo para Adicionar todas as tags: %f s\n", (double)(tv4.tv_usec - tv3.tv_usec)/1000000 + (double)(tv4.tv_sec - tv3.tv_sec));
-			}
-		}
-		if(debug){
+			gettimeofday(&tv4, NULL);
 			gettimeofday(&tv6, NULL);
-			fprintf(log,"Tempo total da %dª Leitura: %f s\n", y+1, (double)(tv6.tv_usec - tv5.tv_usec)/1000000 + (double)(tv6.tv_sec - tv5.tv_sec));
+			fprintf(log,"\n\nTempo para Adicionar todas as tags: %f s\nTempo total da %dª Leitura: %f s\nTamanho da lista de TAGs após a leitura: %d\n", (double)(tv4.tv_usec - tv3.tv_usec)/1000000 + (double)(tv4.tv_sec - tv3.tv_sec), y+1, (double)(tv6.tv_usec - tv5.tv_usec)/1000000 + (double)(tv6.tv_sec - tv5.tv_sec),  list->size);
 		}
 	}
 	if(debug)
 		fclose(log);
-	return list1;
+	return list;
+}
+
+int32_t handle_rfid_module_read2(){
+	r.msg.code = START_AUTO_READ2;
+	r.msg.payload_length[0] = 0x00;
+	r.msg.payload_length[1] = 0x05;
+	r.msg.payload[0] = 0x02; // Reserved
+	r.msg.payload[1] = TAGLIST_SIZE; //Max number of tags/packet must be TAGLIST_SIZE
+	r.msg.payload[2] = 0x01; // Maximum elapsed time to tagging (sec)
+	r.msg.payload[3] = 0x00; // How many times reader perform inventory round [MSB]
+	r.msg.payload[4] = 0x04; // How many times reader perform inventory round [LSB]
+	int32_t val = handle_rfid_module(&r.r1, &r.msg, &r.response, &r.tag_scan1, &r.tag_scan2, &r.tag_scan3, &r.tag_scan4, &r.tag_scan5, &r.tag_scan6);
+	if (val < 0){
+		printf("\noperation failed! (%d)\n", val);
+		Gen2ReaderDestroy(&r.r1);
+		val = Gen2ReaderCreate("192.168.5.10", &r.r1);
+		if (val){
+			printf("Error creating reader session.\n");
+			exit(-1);
+		}
+	} else if(r.response.code == MSG_TYPE_ERROR){
+		printf("\nError on RFID module: %02x %02x %02x %02x", r.response.code, r.response.payload[0], r.response.payload[1], r.response.payload[2]);
+	}
+	return val;
 }
 
 void del_e_li(struct list_e_tag1 *list){ //Da free em todos os nós da lista
@@ -243,29 +262,13 @@ bool cmp_li_e_tag1(struct list_e_tag1 *list, struct tag1 c){
 }
 
 void init(){ //inicia o socket???(a definir)
-	int32_t val = Gen2ReaderCreate("192.168.5.10", &r1);
+	int32_t val = Gen2ReaderCreate("192.168.5.10", &r.r1);
 	if (val)
 	{
 		printf("Error creating reader session.\n");
 		exit(1);
 	}
 }
-
-//~ void add_unrepeated(struct list_tag1 *list, struct tag1 c){ //Adiciona um Tag à lista não encadeada se ela não for repetida
-	//~ if(cmp_li_tag1(list,c))
-		//~ add_tag1(list,c);
-//~ }
-
-
-
-//~ bool cmp_li_tag1(struct list_tag1 *list, struct tag1 c){ //Compara Lista não encadeada com tag, retorna true caso não seja identificado a tag dentro da lista
-	//~ for(int j = 0; j < list->size; j++)
-		//~ if(cmp_tag1(c, *((list->h)+j)))
-			//~ return false;
-	//~ return true;
-//~ }
-
-
 
 bool cmp_tag1(struct tag1 a, struct tag1 b){ //Compara duas tags, retorna true se forem iguais
 	uint16_t epclen = (a.pc[0] >> 2);
@@ -278,26 +281,6 @@ bool cmp_tag1(struct tag1 a, struct tag1 b){ //Compara duas tags, retorna true s
 	return true;
 }
 
-
-
-//~ void add_tag1(struct list_tag1 *list,struct tag1 tag){ //Adiciona uma Tag na lista não encadeada
-	//~ list->size++;
-	//~ list->h = realloc(list->h,sizeof(struct tag1)*list->size);
-	//~ *(list->h-1+list->size) = tag;
-//~ }
-
-
-
-//~ void print_li_tag1(struct list_tag1 *list){ //Printa uma lista não encadeada de Tags
-	//~ printf("Lista de Tags:\n\n");
-	//~ for(int i = 0; i<list->size;i++){
-		//~ printf("\nTag %d",i+1);
-		//~ print_tag1(list->h+i);
-	//~ }
-//~ }
-
-
-
 void print_tag1(struct tag1 *h){ //Printa uma tag
 	printf("\nPC: %.2x %.2x | EPC: ",h->pc[0], h->pc[1]);
 	uint16_t epclen = (h->pc[0] >> 2);
@@ -305,26 +288,6 @@ void print_tag1(struct tag1 *h){ //Printa uma tag
 		printf("%.2x ", h->epc[j]);
 	printf("\n");
 }
-
-
-
-//~ void print_scan(tag1_t tag_scan1, int32_t val){ //apenas armazenando um código excluido que pode vir a ser útil
-	//~ int j, i;
-	//~ if(val == 0)
-		//~ printf("\nNenhuma TAG Lida.");
-	//~ else
-	//~ {
-		//~ printf("\n%d tags inventoried.", val);
-		//~ for(i = 0; i < val; i++)
-	//~ {
-		//~ uint16_t epclen = (tag_scan1.tags1[i].pc[0] >> 2);
-		//~ printf("\nPC: %.2x %.2x | ", tag_scan1.tags1[i].pc[0], tag_scan1.tags1[i].pc[1]);
-		//~ printf("EPC: ");
-		//~ for(j = 0; j < epclen; j++)
-			//~ printf("%.2x ", tag_scan1.tags1[i].epc[j]);
-		//~ }
-	//~ }
-//~ }
 
 //~ static void activate(GtkApplication* app, gpointer user_data){
 	//~ GtkWidget *window;

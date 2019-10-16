@@ -5,316 +5,65 @@ Ciclo 1.
 
 -----------------------------------------------------------
 
-Tempo da 1ª Leitura: 0.117849 s
+Tempo da 1ª Leitura: 0.237709 s
 
 
 Tempo para adicionar 01ª tag: 0.000002 s
-Tempo para adicionar 02ª tag: 0.000000 s
+Tempo para adicionar 02ª tag: 0.000001 s
 Tempo para adicionar 03ª tag: 0.000001 s
 Tempo para adicionar 04ª tag: 0.000000 s
-Tempo para adicionar 05ª tag: 0.000000 s
-Tempo para adicionar 06ª tag: 0.000000 s
-Tempo para adicionar 07ª tag: 0.000001 s
+Tempo para adicionar 05ª tag: 0.000001 s
+Tempo para adicionar 06ª tag: 0.000001 s
+Tempo para adicionar 07ª tag: 0.000000 s
 Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000000 s
-Tempo para adicionar 10ª tag: 0.000000 s
-Tempo para adicionar 11ª tag: 0.000000 s
-Tempo para adicionar 12ª tag: 0.000000 s
-Tempo para adicionar 13ª tag: 0.000000 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000000 s
-Tempo para adicionar 16ª tag: 0.000000 s
-Tempo para adicionar 17ª tag: 0.000000 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000000 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000001 s
+Tempo para adicionar 09ª tag: 0.000001 s
+Tempo para adicionar 10ª tag: 0.000001 s
 
 
-Tempo para Adicionar todas as tags: 0.000027 s
-Tempo total da 1ª Leitura: 0.117885 s
+Tempo para Adicionar todas as tags: 0.000018 s
+Tempo total da 1ª Leitura: 0.237737 s
+Tamanho da lista de TAGs após a leitura: 7
 
 
 -----------------------------------------------------------
 
-Tempo da 2ª Leitura: 0.105157 s
+Tempo da 2ª Leitura: 0.083860 s
 
 
-Tempo para adicionar 01ª tag: 0.000000 s
-Tempo para adicionar 02ª tag: 0.000000 s
+Tempo para adicionar 01ª tag: 0.000001 s
+Tempo para adicionar 02ª tag: 0.000001 s
 Tempo para adicionar 03ª tag: 0.000001 s
 Tempo para adicionar 04ª tag: 0.000000 s
-Tempo para adicionar 05ª tag: 0.000000 s
+Tempo para adicionar 05ª tag: 0.000001 s
 Tempo para adicionar 06ª tag: 0.000000 s
-Tempo para adicionar 07ª tag: 0.000000 s
+Tempo para adicionar 07ª tag: 0.000002 s
 Tempo para adicionar 08ª tag: 0.000000 s
-Tempo para adicionar 09ª tag: 0.000000 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000000 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000001 s
-Tempo para adicionar 17ª tag: 0.000001 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000000 s
-Tempo para adicionar 20ª tag: 0.000000 s
-Tempo para adicionar 21ª tag: 0.000000 s
-Tempo para adicionar 22ª tag: 0.000000 s
+Tempo para adicionar 09ª tag: 0.000001 s
 
 
 Tempo para Adicionar todas as tags: 0.000021 s
-Tempo total da 2ª Leitura: 0.105187 s
+Tempo total da 2ª Leitura: 0.083893 s
+Tamanho da lista de TAGs após a leitura: 7
 
 
 -----------------------------------------------------------
 
-Tempo da 3ª Leitura: 0.144038 s
-
-
-Tempo para adicionar 01ª tag: 0.000002 s
-Tempo para adicionar 02ª tag: 0.000001 s
-Tempo para adicionar 03ª tag: 0.000002 s
-Tempo para adicionar 04ª tag: 0.000001 s
-Tempo para adicionar 05ª tag: 0.000001 s
-Tempo para adicionar 06ª tag: 0.000000 s
-Tempo para adicionar 07ª tag: 0.000001 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000001 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000001 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000000 s
-Tempo para adicionar 17ª tag: 0.000000 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000000 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000000 s
-Tempo para adicionar 22ª tag: 0.000000 s
-
-
-Tempo para Adicionar todas as tags: 0.000040 s
-Tempo total da 3ª Leitura: 0.144091 s
-
-
------------------------------------------------------------
-
-Tempo da 4ª Leitura: 0.097362 s
-
-
-Tempo para adicionar 01ª tag: 0.000002 s
-Tempo para adicionar 02ª tag: 0.000000 s
-Tempo para adicionar 03ª tag: 0.000001 s
-Tempo para adicionar 04ª tag: 0.000001 s
-Tempo para adicionar 05ª tag: 0.000001 s
-Tempo para adicionar 06ª tag: 0.000000 s
-Tempo para adicionar 07ª tag: 0.000000 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000002 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000000 s
-Tempo para adicionar 13ª tag: 0.000000 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000002 s
-Tempo para adicionar 17ª tag: 0.000001 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000001 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000000 s
-Tempo para adicionar 22ª tag: 0.000000 s
-
-
-Tempo para Adicionar todas as tags: 0.000115 s
-Tempo total da 4ª Leitura: 0.097492 s
-
-
------------------------------------------------------------
-
-Tempo da 5ª Leitura: 0.099992 s
-
-
-Tempo para adicionar 01ª tag: 0.000002 s
-Tempo para adicionar 02ª tag: 0.000001 s
-Tempo para adicionar 03ª tag: 0.000001 s
-Tempo para adicionar 04ª tag: 0.000001 s
-Tempo para adicionar 05ª tag: 0.000000 s
-Tempo para adicionar 06ª tag: 0.000000 s
-Tempo para adicionar 07ª tag: 0.000001 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000000 s
-Tempo para adicionar 10ª tag: 0.000000 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000001 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000000 s
-Tempo para adicionar 17ª tag: 0.000001 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000001 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000001 s
-
-
-Tempo para Adicionar todas as tags: 0.000046 s
-Tempo total da 5ª Leitura: 0.100052 s
-
-
------------------------------------------------------------
-
-Tempo da 6ª Leitura: 0.107624 s
-
-
-Tempo para adicionar 01ª tag: 0.000003 s
-Tempo para adicionar 02ª tag: 0.000001 s
-Tempo para adicionar 03ª tag: 0.000001 s
-Tempo para adicionar 04ª tag: 0.000000 s
-Tempo para adicionar 05ª tag: 0.000001 s
-Tempo para adicionar 06ª tag: 0.000001 s
-Tempo para adicionar 07ª tag: 0.000001 s
-Tempo para adicionar 08ª tag: 0.000000 s
-Tempo para adicionar 09ª tag: 0.000001 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000002 s
-Tempo para adicionar 12ª tag: 0.000001 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000000 s
-Tempo para adicionar 17ª tag: 0.000001 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000001 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000001 s
-
-
-Tempo para Adicionar todas as tags: 0.000046 s
-Tempo total da 6ª Leitura: 0.107685 s
-
-
------------------------------------------------------------
-
-Tempo da 7ª Leitura: 0.113395 s
+Tempo da 3ª Leitura: 0.077135 s
 
 
 Tempo para adicionar 01ª tag: 0.000001 s
-Tempo para adicionar 02ª tag: 0.000000 s
-Tempo para adicionar 03ª tag: 0.000000 s
-Tempo para adicionar 04ª tag: 0.000000 s
-Tempo para adicionar 05ª tag: 0.000000 s
-Tempo para adicionar 06ª tag: 0.000001 s
-Tempo para adicionar 07ª tag: 0.000000 s
-Tempo para adicionar 08ª tag: 0.000000 s
-Tempo para adicionar 09ª tag: 0.000001 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000000 s
-Tempo para adicionar 12ª tag: 0.000000 s
-Tempo para adicionar 13ª tag: 0.000000 s
-Tempo para adicionar 14ª tag: 0.000000 s
-Tempo para adicionar 15ª tag: 0.000000 s
-Tempo para adicionar 16ª tag: 0.000000 s
-Tempo para adicionar 17ª tag: 0.000001 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000001 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000001 s
-
-
-Tempo para Adicionar todas as tags: 0.000022 s
-Tempo total da 7ª Leitura: 0.113425 s
-
-
------------------------------------------------------------
-
-Tempo da 8ª Leitura: 0.088585 s
-
-
-Tempo para adicionar 01ª tag: 0.000001 s
-Tempo para adicionar 02ª tag: 0.000000 s
-Tempo para adicionar 03ª tag: 0.000001 s
-Tempo para adicionar 04ª tag: 0.000001 s
-Tempo para adicionar 05ª tag: 0.000001 s
-Tempo para adicionar 06ª tag: 0.000001 s
-Tempo para adicionar 07ª tag: 0.000000 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000000 s
-Tempo para adicionar 10ª tag: 0.000000 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000001 s
-Tempo para adicionar 13ª tag: 0.000000 s
-Tempo para adicionar 14ª tag: 0.000000 s
-Tempo para adicionar 15ª tag: 0.000000 s
-Tempo para adicionar 16ª tag: 0.000000 s
-Tempo para adicionar 17ª tag: 0.000000 s
-Tempo para adicionar 18ª tag: 0.000000 s
-Tempo para adicionar 19ª tag: 0.000000 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000000 s
-Tempo para adicionar 22ª tag: 0.000001 s
-
-
-Tempo para Adicionar todas as tags: 0.000085 s
-Tempo total da 8ª Leitura: 0.088681 s
-
-
------------------------------------------------------------
-
-Tempo da 9ª Leitura: 0.106184 s
-
-
-Tempo para adicionar 01ª tag: 0.000002 s
 Tempo para adicionar 02ª tag: 0.000001 s
 Tempo para adicionar 03ª tag: 0.000001 s
 Tempo para adicionar 04ª tag: 0.000000 s
-Tempo para adicionar 05ª tag: 0.000000 s
-Tempo para adicionar 06ª tag: 0.000001 s
-Tempo para adicionar 07ª tag: 0.000001 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000001 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000000 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000000 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000000 s
-Tempo para adicionar 17ª tag: 0.000000 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000001 s
-Tempo para adicionar 20ª tag: 0.000000 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000001 s
-
-
-Tempo para Adicionar todas as tags: 0.000040 s
-Tempo total da 9ª Leitura: 0.106238 s
-
-
------------------------------------------------------------
-
-Tempo da 10ª Leitura: 0.039814 s
-
-
-Tempo para adicionar 01ª tag: 0.000002 s
-Tempo para adicionar 02ª tag: 0.000002 s
-Tempo para adicionar 03ª tag: 0.000001 s
 
 
 Tempo para Adicionar todas as tags: 0.000011 s
-Tempo total da 10ª Leitura: 0.039843 s
+Tempo total da 3ª Leitura: 0.077157 s
+Tamanho da lista de TAGs após a leitura: 7
 
 
-Tempo do ciclo: 1.020908
+Tempo do ciclo: 0.398867
+
 -----------------------------------------------------------
 -----------------------------------------------------------
 -----------------------------------------------------------
@@ -326,322 +75,152 @@ Ciclo 2.
 
 -----------------------------------------------------------
 
-Tempo da 1ª Leitura: 0.119180 s
+Tempo da 1ª Leitura: 0.083906 s
 
 
-Tempo para adicionar 01ª tag: 0.000000 s
+Tempo para adicionar 01ª tag: 0.000001 s
+Tempo para adicionar 02ª tag: 0.000001 s
+Tempo para adicionar 03ª tag: 0.000001 s
+Tempo para adicionar 04ª tag: 0.000001 s
+Tempo para adicionar 05ª tag: 0.000000 s
+Tempo para adicionar 06ª tag: 0.000000 s
+Tempo para adicionar 07ª tag: 0.000001 s
+
+
+Tempo para Adicionar todas as tags: 0.000015 s
+Tempo total da 1ª Leitura: 0.083934 s
+Tamanho da lista de TAGs após a leitura: 4
+
+
+-----------------------------------------------------------
+
+Tempo da 2ª Leitura: 0.080074 s
+
+
+Tempo para adicionar 01ª tag: 0.000001 s
 Tempo para adicionar 02ª tag: 0.000001 s
 Tempo para adicionar 03ª tag: 0.000000 s
-Tempo para adicionar 04ª tag: 0.000000 s
+Tempo para adicionar 04ª tag: 0.000001 s
+Tempo para adicionar 05ª tag: 0.000001 s
+Tempo para adicionar 06ª tag: 0.000000 s
+Tempo para adicionar 07ª tag: 0.000001 s
+Tempo para adicionar 08ª tag: 0.000000 s
+Tempo para adicionar 09ª tag: 0.000000 s
+
+
+Tempo para Adicionar todas as tags: 0.000017 s
+Tempo total da 2ª Leitura: 0.080103 s
+Tamanho da lista de TAGs após a leitura: 4
+
+
+-----------------------------------------------------------
+
+Tempo da 3ª Leitura: 0.088970 s
+
+
+Tempo para adicionar 01ª tag: 0.000001 s
+Tempo para adicionar 02ª tag: 0.000001 s
+Tempo para adicionar 03ª tag: 0.000001 s
+Tempo para adicionar 04ª tag: 0.000001 s
 Tempo para adicionar 05ª tag: 0.000000 s
 Tempo para adicionar 06ª tag: 0.000000 s
 Tempo para adicionar 07ª tag: 0.000000 s
 Tempo para adicionar 08ª tag: 0.000000 s
 Tempo para adicionar 09ª tag: 0.000001 s
-Tempo para adicionar 10ª tag: 0.000000 s
-Tempo para adicionar 11ª tag: 0.000000 s
-Tempo para adicionar 12ª tag: 0.000000 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000000 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000001 s
-Tempo para adicionar 17ª tag: 0.000001 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000001 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000000 s
-Tempo para adicionar 22ª tag: 0.000000 s
+Tempo para adicionar 10ª tag: 0.000001 s
 
 
-Tempo para Adicionar todas as tags: 0.000023 s
-Tempo total da 1ª Leitura: 0.119210 s
+Tempo para Adicionar todas as tags: 0.000021 s
+Tempo total da 3ª Leitura: 0.089006 s
+Tamanho da lista de TAGs após a leitura: 4
 
+
+Tempo do ciclo: 0.253140
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
+
+
+Ciclo 3.
 
 -----------------------------------------------------------
 
-Tempo da 2ª Leitura: 0.114357 s
+Tempo da 1ª Leitura: 0.100216 s
 
 
 Tempo para adicionar 01ª tag: 0.000001 s
-Tempo para adicionar 02ª tag: 0.000002 s
-Tempo para adicionar 03ª tag: 0.000001 s
-Tempo para adicionar 04ª tag: 0.000001 s
-Tempo para adicionar 05ª tag: 0.000001 s
-Tempo para adicionar 06ª tag: 0.000001 s
-Tempo para adicionar 07ª tag: 0.000001 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000001 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000001 s
-Tempo para adicionar 13ª tag: 0.000000 s
-Tempo para adicionar 14ª tag: 0.000008 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000001 s
-Tempo para adicionar 17ª tag: 0.000000 s
-Tempo para adicionar 18ª tag: 0.000002 s
-Tempo para adicionar 19ª tag: 0.000000 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000001 s
-
-
-Tempo para Adicionar todas as tags: 0.000120 s
-Tempo total da 2ª Leitura: 0.114493 s
-
-
------------------------------------------------------------
-
-Tempo da 3ª Leitura: 0.109472 s
-
-
-Tempo para adicionar 01ª tag: 0.000002 s
-Tempo para adicionar 02ª tag: 0.000001 s
-Tempo para adicionar 03ª tag: 0.000001 s
-Tempo para adicionar 04ª tag: 0.000001 s
-Tempo para adicionar 05ª tag: 0.000001 s
-Tempo para adicionar 06ª tag: 0.000000 s
-Tempo para adicionar 07ª tag: 0.000001 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000001 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000000 s
-Tempo para adicionar 12ª tag: 0.000000 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000001 s
-Tempo para adicionar 17ª tag: 0.000002 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000000 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000000 s
-
-
-Tempo para Adicionar todas as tags: 0.000048 s
-Tempo total da 3ª Leitura: 0.109535 s
-
-
------------------------------------------------------------
-
-Tempo da 4ª Leitura: 0.113049 s
-
-
-Tempo para adicionar 01ª tag: 0.000003 s
 Tempo para adicionar 02ª tag: 0.000001 s
 Tempo para adicionar 03ª tag: 0.000001 s
 Tempo para adicionar 04ª tag: 0.000001 s
 Tempo para adicionar 05ª tag: 0.000001 s
 Tempo para adicionar 06ª tag: 0.000001 s
 Tempo para adicionar 07ª tag: 0.000001 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000001 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000002 s
-Tempo para adicionar 12ª tag: 0.000001 s
-Tempo para adicionar 13ª tag: 0.000002 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000000 s
-Tempo para adicionar 16ª tag: 0.000001 s
-Tempo para adicionar 17ª tag: 0.000001 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000001 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000001 s
-
-
-Tempo para Adicionar todas as tags: 0.000079 s
-Tempo total da 4ª Leitura: 0.113146 s
-
-
------------------------------------------------------------
-
-Tempo da 5ª Leitura: 0.116790 s
-
-
-Tempo para adicionar 01ª tag: 0.000004 s
-Tempo para adicionar 02ª tag: 0.000003 s
-Tempo para adicionar 03ª tag: 0.000002 s
-Tempo para adicionar 04ª tag: 0.000001 s
-Tempo para adicionar 05ª tag: 0.000001 s
-Tempo para adicionar 06ª tag: 0.000002 s
-Tempo para adicionar 07ª tag: 0.000000 s
-Tempo para adicionar 08ª tag: 0.000002 s
-Tempo para adicionar 09ª tag: 0.000001 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000000 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000000 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000000 s
-Tempo para adicionar 17ª tag: 0.000001 s
-Tempo para adicionar 18ª tag: 0.000000 s
-Tempo para adicionar 19ª tag: 0.000001 s
-Tempo para adicionar 20ª tag: 0.000001 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000001 s
-
-
-Tempo para Adicionar todas as tags: 0.000061 s
-Tempo total da 5ª Leitura: 0.116875 s
-
-
------------------------------------------------------------
-
-Tempo da 6ª Leitura: 0.128219 s
-
-
-Tempo para adicionar 01ª tag: 0.000003 s
-Tempo para adicionar 02ª tag: 0.000001 s
-Tempo para adicionar 03ª tag: 0.000001 s
-Tempo para adicionar 04ª tag: 0.000001 s
-Tempo para adicionar 05ª tag: 0.000001 s
-Tempo para adicionar 06ª tag: 0.000002 s
-Tempo para adicionar 07ª tag: 0.000001 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000007 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000002 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000001 s
-Tempo para adicionar 17ª tag: 0.000001 s
-Tempo para adicionar 18ª tag: 0.000002 s
-Tempo para adicionar 19ª tag: 0.000001 s
-Tempo para adicionar 20ª tag: 0.000002 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000001 s
-
-
-Tempo para Adicionar todas as tags: 0.000225 s
-Tempo total da 6ª Leitura: 0.128469 s
-
-
------------------------------------------------------------
-
-Tempo da 7ª Leitura: 0.120403 s
-
-
-Tempo para adicionar 01ª tag: 0.000002 s
-Tempo para adicionar 02ª tag: 0.000001 s
-Tempo para adicionar 03ª tag: 0.000001 s
-Tempo para adicionar 04ª tag: 0.000002 s
-Tempo para adicionar 05ª tag: 0.000001 s
-Tempo para adicionar 06ª tag: 0.000001 s
-Tempo para adicionar 07ª tag: 0.000001 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000001 s
-Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000001 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000000 s
-Tempo para adicionar 16ª tag: 0.000001 s
-Tempo para adicionar 17ª tag: 0.000001 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000001 s
-Tempo para adicionar 20ª tag: 0.000000 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000001 s
-
-
-Tempo para Adicionar todas as tags: 0.000050 s
-Tempo total da 7ª Leitura: 0.120467 s
-
-
------------------------------------------------------------
-
-Tempo da 8ª Leitura: 0.120698 s
-
-
-Tempo para adicionar 01ª tag: 0.000002 s
-Tempo para adicionar 02ª tag: 0.000001 s
-Tempo para adicionar 03ª tag: 0.000001 s
-Tempo para adicionar 04ª tag: 0.000001 s
-Tempo para adicionar 05ª tag: 0.000001 s
-Tempo para adicionar 06ª tag: 0.000000 s
-Tempo para adicionar 07ª tag: 0.000001 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000002 s
-Tempo para adicionar 10ª tag: 0.000000 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000001 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000001 s
-Tempo para adicionar 16ª tag: 0.000001 s
-Tempo para adicionar 17ª tag: 0.000000 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000000 s
-Tempo para adicionar 20ª tag: 0.000002 s
-Tempo para adicionar 21ª tag: 0.000000 s
-Tempo para adicionar 22ª tag: 0.000001 s
-
-
-Tempo para Adicionar todas as tags: 0.000049 s
-Tempo total da 8ª Leitura: 0.120763 s
-
-
------------------------------------------------------------
-
-Tempo da 9ª Leitura: 0.082811 s
-
-
-Tempo para adicionar 01ª tag: 0.000002 s
-Tempo para adicionar 02ª tag: 0.000002 s
-Tempo para adicionar 03ª tag: 0.000001 s
-Tempo para adicionar 04ª tag: 0.000000 s
-Tempo para adicionar 05ª tag: 0.000001 s
-Tempo para adicionar 06ª tag: 0.000002 s
-Tempo para adicionar 07ª tag: 0.000000 s
 Tempo para adicionar 08ª tag: 0.000001 s
 Tempo para adicionar 09ª tag: 0.000000 s
 Tempo para adicionar 10ª tag: 0.000001 s
-Tempo para adicionar 11ª tag: 0.000002 s
-Tempo para adicionar 12ª tag: 0.000001 s
-Tempo para adicionar 13ª tag: 0.000001 s
-Tempo para adicionar 14ª tag: 0.000002 s
-Tempo para adicionar 15ª tag: 0.000001 s
 
 
-Tempo para Adicionar todas as tags: 0.000054 s
-Tempo total da 9ª Leitura: 0.082886 s
+Tempo para Adicionar todas as tags: 0.000084 s
+Tempo total da 1ª Leitura: 0.100317 s
+Tamanho da lista de TAGs após a leitura: 4
 
 
 -----------------------------------------------------------
 
-Tempo da 10ª Leitura: 0.106017 s
+Tempo da 2ª Leitura: 0.099114 s
+
+
+Tempo para adicionar 01ª tag: 0.000001 s
+Tempo para adicionar 02ª tag: 0.000001 s
+Tempo para adicionar 03ª tag: 0.000001 s
+Tempo para adicionar 04ª tag: 0.000001 s
+Tempo para adicionar 05ª tag: 0.000001 s
+Tempo para adicionar 06ª tag: 0.000001 s
+Tempo para adicionar 07ª tag: 0.000002 s
+Tempo para adicionar 08ª tag: 0.000000 s
+Tempo para adicionar 09ª tag: 0.000001 s
+Tempo para adicionar 10ª tag: 0.000000 s
+Tempo para adicionar 11ª tag: 0.000001 s
+Tempo para adicionar 12ª tag: 0.000001 s
+Tempo para adicionar 13ª tag: 0.000001 s
+Tempo para adicionar 14ª tag: 0.000001 s
+Tempo para adicionar 15ª tag: 0.000000 s
+
+
+Tempo para Adicionar todas as tags: 0.000036 s
+Tempo total da 2ª Leitura: 0.099166 s
+Tamanho da lista de TAGs após a leitura: 7
+
+
+-----------------------------------------------------------
+
+Tempo da 3ª Leitura: 0.091947 s
 
 
 Tempo para adicionar 01ª tag: 0.000002 s
 Tempo para adicionar 02ª tag: 0.000001 s
 Tempo para adicionar 03ª tag: 0.000001 s
-Tempo para adicionar 04ª tag: 0.000000 s
+Tempo para adicionar 04ª tag: 0.000001 s
 Tempo para adicionar 05ª tag: 0.000001 s
 Tempo para adicionar 06ª tag: 0.000001 s
-Tempo para adicionar 07ª tag: 0.000001 s
-Tempo para adicionar 08ª tag: 0.000001 s
-Tempo para adicionar 09ª tag: 0.000002 s
-Tempo para adicionar 10ª tag: 0.000000 s
-Tempo para adicionar 11ª tag: 0.000001 s
-Tempo para adicionar 12ª tag: 0.000001 s
-Tempo para adicionar 13ª tag: 0.000003 s
-Tempo para adicionar 14ª tag: 0.000001 s
-Tempo para adicionar 15ª tag: 0.000002 s
-Tempo para adicionar 16ª tag: 0.000001 s
-Tempo para adicionar 17ª tag: 0.000001 s
-Tempo para adicionar 18ª tag: 0.000001 s
-Tempo para adicionar 19ª tag: 0.000001 s
-Tempo para adicionar 20ª tag: 0.000000 s
-Tempo para adicionar 21ª tag: 0.000001 s
-Tempo para adicionar 22ª tag: 0.000001 s
+Tempo para adicionar 07ª tag: 0.000000 s
+Tempo para adicionar 08ª tag: 0.000000 s
+Tempo para adicionar 09ª tag: 0.000001 s
+Tempo para adicionar 10ª tag: 0.000001 s
 
 
-Tempo para Adicionar todas as tags: 0.000149 s
-Tempo total da 10ª Leitura: 0.106178 s
+Tempo para Adicionar todas as tags: 0.000025 s
+Tempo total da 3ª Leitura: 0.091986 s
+Tamanho da lista de TAGs após a leitura: 7
+
+
+Tempo do ciclo: 0.291604
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
