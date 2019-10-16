@@ -88,11 +88,11 @@ int main(int argc, char **argv){
 		struct list_e_tag1 *list = malloc(sizeof(struct list_tag1));
 		if(debug)
 				gettimeofday(&tv7, NULL);
-		for(uint8_t a=0;a<n_antenas;a++){
-			if(debug){
 				open_log();
 				fprintf(log, "\n\nCiclo %d.",count);
-				fclose(log);
+		for(uint8_t a=0;a<n_antenas;a++){
+			if(debug){
+				fprintf(log, "\n\nAntenna %d\n-----------------------------------------------------------\n-----------------------------------------------------------.",a+1);
 				list = catch_tags_debug(list, n_cycles);
 			} else {
 				list = catch_tags(list, n_cycles);
@@ -105,7 +105,6 @@ int main(int argc, char **argv){
 		printf("ciclo %d:\n\n",count++);
 		print_e_list(list);
 		if(debug){
-			open_log();
 			fprintf(log, "\n\nTempo do ciclo: %f\n\n-----------------------------------------------------------\n-----------------------------------------------------------\n-----------------------------------------------------------\n\n\n",(double)(tv8.tv_usec - tv7.tv_usec)/1000000 + (double)(tv8.tv_sec - tv7.tv_sec));
 			fclose(log);
 		}
@@ -168,7 +167,6 @@ struct list_e_tag1* catch_tags(struct list_e_tag1 *list, int n_cycles){ //Funç�
 }
 
 struct list_e_tag1* catch_tags_debug(struct list_e_tag1 *list, int n_cycles){ //Função com debug
-	open_log();
 	int te;
 	list->head=NULL;
 	list->size = 0;
@@ -203,8 +201,6 @@ struct list_e_tag1* catch_tags_debug(struct list_e_tag1 *list, int n_cycles){ //
 			fprintf(log,"\n\nTempo para Adicionar todas as tags: %f s\nTempo total da %dª Leitura: %f s\nTamanho da lista de TAGs após a leitura: %d\n", (double)(tv4.tv_usec - tv3.tv_usec)/1000000 + (double)(tv4.tv_sec - tv3.tv_sec), y+1, (double)(tv6.tv_usec - tv5.tv_usec)/1000000 + (double)(tv6.tv_sec - tv5.tv_sec),  list->size);
 		}
 	}
-	if(debug)
-		fclose(log);
 	return list;
 }
 
