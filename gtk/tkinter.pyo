@@ -1,0 +1,58 @@
+import tkinter as tk
+import time
+
+class Application(tk.Frame):
+	def __init__(self, master=None):
+		super().__init__(master)
+		self.master = master
+		self.pack()
+		self.create_widgets()
+
+	def create_widgets(self):
+		self.hi_there = tk.Button(self)
+		self.hi_there["text"] = "Ler TAG"
+		self.hi_there["command"] = self.lerTag
+		self.hi_there.pack(side="top")
+		self.oi = tk.Scrollbar(self)
+		self.oi.pack(side='right')
+		self.s = tk.Entry(self)
+		self.s.insert('end',"Pesquisar...")
+		self.s.bind('<KeyRelease>', self.refine)
+		self.s.pack()
+		self.listbox = tk.Listbox(self, yscrollcommand=self.oi.set)
+		self.listbox.pack(side='top', fill='x')
+		self.postt = tk.Button(self)
+		self.postt["text"] = "Associar à TAG"
+		self.postt["command"] = self.post
+		self.postt.pack(side="top")
+		self.oi.config(command=self.listbox.yview)
+		self.quit = tk.Button(self, text="QUIT", fg="red",command=self.master.destroy)
+		self.quit.pack(side="bottom")
+		self.refine()
+	
+	def refine(self, *args):
+		str="";
+		if(self.s.get()!="Pesquisar..."):
+			str = self.s.get()
+		self.listbox.delete(0, "end")
+		f = open("produtos.txt", "rt")
+		for s in f.readlines():
+			if(str.lower() in s.lower()):
+				self.listbox.insert("end",s[0:len(s)-1]);
+
+	def post(self):
+		try:
+			print(self.listbox.get(self.listbox.curselection()[0]))
+		except:
+			print("nada selecionado")
+
+	def lerTag(self):
+		print("Lendo")
+
+
+
+
+root = tk.Tk()
+root.geometry("250x350")
+app = Application(master=root)
+app.mainloop()

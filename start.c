@@ -11,7 +11,7 @@
 FILE *log;
 struct timeval  tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8;
 bool debug = true;
-int count=1, n_cycles = 3;
+int count=1, n_cycles = 2;
 int8_t n_antenas = 2;
 
 typedef struct reader_s {
@@ -49,7 +49,6 @@ bool cmp_tag1(struct tag1 a, struct tag1 b);
 struct list_e_tag1* catch_tags(struct list_e_tag1 *list, int n_cycles);
 void init_reader();
 void init_reader_config();
-static void activate(GtkApplication* app, gpointer user_data);
 void add_e_tag1(struct list_e_tag1 *list, struct tag1 tag);
 void print_e_list(struct list_e_tag1 *list);
 bool cmp_li_e_tag1(struct list_e_tag1 *list, struct tag1 c);
@@ -58,7 +57,6 @@ void del_e_li(struct list_e_tag1 *list);
 void open_log();
 int32_t handle_rfid_module_read2();
 struct list_e_tag1* catch_tags_debug(struct list_e_tag1 *list, int n_cycles);
-void cycle();
 void set_antenna(uint8_t arg);
 
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
@@ -78,13 +76,8 @@ int main(int argc, char **argv){
 		fprintf(log, "Tempo de init_reader() && init_reader_config(): %f s\n",(double)(tv8.tv_usec - tv7.tv_usec)/1000000 + (double)(tv8.tv_sec - tv7.tv_sec));
 		fclose(log);
 	}
-	//~ GtkApplication *app;
-	//~ int status;
-	//~ app = gtk_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE);
-	//~ g_signal_connect(app, "activate", G_CALLBACK (activate), NULL);
-	//~ status = g_application_run(G_APPLICATION (app), argc, argv);
-	//~ g_object_unref(app);
 	while(1){
+		system("clear");
 		struct list_e_tag1 *list = malloc(sizeof(struct list_tag1));
 		if(debug)
 				gettimeofday(&tv7, NULL);
@@ -92,7 +85,7 @@ int main(int argc, char **argv){
 				fprintf(log, "\n\nCiclo %d.",count);
 		for(uint8_t a=0;a<n_antenas;a++){
 			if(debug){
-				fprintf(log, "\n\nAntenna %d\n-----------------------------------------------------------\n-----------------------------------------------------------.",a+1);
+				fprintf(log, "\n\nAntenna %d\n-----------------------------------------------------------\n-----------------------------------------------------------",a+1);
 				list = catch_tags_debug(list, n_cycles);
 			} else {
 				list = catch_tags(list, n_cycles);
@@ -101,7 +94,6 @@ int main(int argc, char **argv){
 		}
 		if(debug)
 				gettimeofday(&tv8, NULL);
-		system("clear");
 		printf("ciclo %d:\n\n",count++);
 		print_e_list(list);
 		if(debug){
@@ -212,7 +204,7 @@ int32_t handle_rfid_module_read2(){
 	r.msg.payload[1] = TAGLIST_SIZE; //Max number of tags/packet must be TAGLIST_SIZE
 	r.msg.payload[2] = 0x01; // Maximum elapsed time to tagging (sec)
 	r.msg.payload[3] = 0x00; // How many times reader perform inventory round [MSB]
-	r.msg.payload[4] = 0x04; // How many times reader perform inventory round [LSB]
+	r.msg.payload[4] = 0x01; // How many times reader perform inventory round [LSB]
 	int32_t val = handle_rfid_module(&r.r1, &r.msg, &r.response, &r.tag_scan1, &r.tag_scan2, &r.tag_scan3, &r.tag_scan4, &r.tag_scan5, &r.tag_scan6);
 	if (val < 0){
 		printf("\noperation failed! (%d)\n", val);
@@ -313,22 +305,3 @@ void print_tag1(struct tag1 *h){ //Printa uma tag
 		printf("%.2x ", h->epc[j]);
 	printf("\n");
 }
-
-//~ static void activate(GtkApplication* app, gpointer user_data){
-	//~ GtkWidget *window;
-	//~ GtkWidget *button;
-	//~ GtkWidget *button_box;
-	//~ window = gtk_application_window_new(app);
-	//~ gtk_window_set_title(GTK_WINDOW (window), "Window");
-	//~ gtk_window_set_default_size(GTK_WINDOW (window), 200, 200);
-	
-	//~ button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-	//~ gtk_container_add(GTK_CONTAINER (window), button_box);
-	
-	//~ button = gtk_button_new_with_label("cycle");
-	//~ g_signal_connect(button, "clicked", G_CALLBACK(cycle), NULL);
-	//~ g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_widget_destroy), window);
-	//~ gtk_container_add(GTK_CONTAINER (button_box), button);
-	
-	//~ gtk_widget_show_all(window);
-//~ }
