@@ -11,10 +11,9 @@
 FILE *log;
 struct timeval  tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8;
 bool comprando = true, debug = true;
-int count=1, n_cycles = 2;
+int count=1, n_cycles = 2, arg, pid;
 int8_t n_antenas = 2;
 uint8_t a = 0;
-char *pid;
 
 typedef struct reader_s {
 	tag1_t tag_scan1;
@@ -41,11 +40,6 @@ typedef struct list_e_tag1{
 	int size;
 } list_e_tag1;
 
-typedef struct list_tag1 {
-	struct tag1 *h;
-	int size;
-}list_tag1;
-
 void print_tag1(struct tag1 *h);
 bool cmp_tag1(struct tag1 a, struct tag1 b);
 struct list_e_tag1* catch_tags(struct list_e_tag1 *list, int n_cycles);
@@ -61,13 +55,7 @@ int32_t handle_rfid_module_read2();
 struct list_e_tag1* catch_tags_debug(struct list_e_tag1 *list, int n_cycles);
 void set_antenna(uint8_t arg);
 void init_compra();
-
-void sleeep(int sig){
-	FILE * a = fopen("Tag.txt","w+");
-	fprintf(a, "OI aplicação!");
-	fclose(a);
-	kill(atoi(pid), SIGUSR1);
-}
+void antena_8(struct list_e_tag1 *);
 
 void finish(){
 	comprando=false;
@@ -78,13 +66,15 @@ void finish(){
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
 
 int main(int argc, char **argv){
+	arg=argc;
+	if(arg==2)
+		pid = atoi(argv[1]);
 	init_reader_config();
 	init_reader();
-	struct list_e_tag1 *list = malloc(sizeof(struct list_tag1));
+	struct list_e_tag1 *list = malloc(sizeof(struct list_e_tag1));
 	list->size=0;
 	list->head=NULL;
-	signal(SIGUSR1, sleeep);
-	pid = argv[1];
+	//signal(SIGUSR1, sleeep);
 	signal(SIGALRM, finish);
 	while(1){
 		sleep(1);
@@ -102,12 +92,34 @@ int main(int argc, char **argv){
 			printf("Nada detectado, dormindo 1 segundo para tentar de novo!\n");
 		}
 		del_e_li(list);
+		antena_8(list);
 	}
 }
 
 //-------------------------------------------------------------------------------------- FIM MAIN --------------------------------------------------------------------------------------//
 //-------------------------------------------------------------------------------------- FIM MAIN --------------------------------------------------------------------------------------//
 //-------------------------------------------------------------------------------------- FIM MAIN --------------------------------------------------------------------------------------//
+
+void antena_8(struct list_e_tag1 *list){
+	set_antenna(8);
+	catch_tags(list,1);
+	int temp = list->size;
+	if((list->size>0)&&(list->size<2)){
+		printf("Antena 8 leu uma TAG! Enviando sinal para GUI!\n");
+		FILE *fp = fopen("Tag.txt","w+");
+		uint16_t epclen = (list->head->tag.pc[0] >> 2);
+		fprintf(fp,"%.2x\n%.2x\n",list->head->tag.pc[0], list->head->tag.pc[1]);
+		for(int j = 0; j < epclen; j++)
+			fprintf(fp,"%.2x\n", list->head->tag.epc[j]);
+		if(arg==2)
+			kill(pid, SIGINT);
+		fclose(fp);
+	} else if(list->size>1){
+		printf("Mais de uma Tag lida pela antena 8!\n");
+	}
+	del_e_li(list);
+	set_antenna(1);
+}
 
 void init_compra(struct list_e_tag1 *list){
 	printf("Carrinho passando! Captando tags.\n");
@@ -238,7 +250,6 @@ void del_e_li(struct list_e_tag1 *list){ //Da free em todos os nós da lista
 		free(n);
 		n = list->head;
 	}
-	list->head=NULL;
 	list->size=0;
 }
 

@@ -13,10 +13,8 @@ class Application(tk.Frame):
 		self.create_widgets()
 
 	def create_widgets(self):
-		self.hi_there = tk.Button(self)
-		self.hi_there["text"] = "Ler TAG"
-		self.hi_there["command"] = self.lerTag
-		self.hi_there.pack(side="top")
+		self.label = tk.Label(self, text="Esperando TAG")
+		self.label.pack(side="top")
 		self.oi = tk.Scrollbar(self)
 		self.oi.pack(side='right')
 		self.s = tk.Entry(self)
@@ -30,9 +28,12 @@ class Application(tk.Frame):
 		self.postt["command"] = self.post
 		self.postt.pack(side="top")
 		self.oi.config(command=self.listbox.yview)
-		self.quit = tk.Button(self, text="QUIT", fg="red",command=self.master.destroy)
+		self.quit = tk.Button(self, text="SAIR", fg="red",command=self.master.destroy)
 		self.quit.pack(side="bottom")
 		self.refine()
+		self.label2 = tk.Label(self, text="Não associado")
+		self.label2.pack(side="bottom")
+		self.label2["fg"] = "red"
 	
 	def refine(self, *args):
 		str="";
@@ -43,31 +44,35 @@ class Application(tk.Frame):
 		for s in f.readlines():
 			if(str.lower() in s.lower()):
 				self.listbox.insert("end",s[0:len(s)-1]);
+		f.close()
 
 	def post(self):
 		try:
-			print(self.listbox.get(self.listbox.curselection()[0]))
+			print("Tentando associar '"+self.listbox.get(self.listbox.curselection()[0]) + "'com '" + self.label["text"] + "'")
+			self.label2["text"] = "Associado"
+			self.label2["fg"] = "green"
 		except:
 			print("nada selecionado")
-
-	def lerTag(self):
-		global childpid
-		os.kill(childpid,signal.SIGUSR1)
 		
 
 
 
-
-root = tk.Tk()
-root.geometry("250x350")
-app = Application(master=root)
-def signal_handler(sig, frame):
-	print("recebi o sinal de volta!")
 cmd = ["../start",str(os.getpid())]
 childpid = os.fork();
 if(childpid==0):
 	os.execvp(cmd[0],cmd)
 	exit(1);
-
-signal.signal(signal.SIGUSR1, signal_handler)
+root = tk.Tk()
+root.geometry("400x350")
+app = Application(master=root)
+def signal_handler(sig, frame):
+	temp = "TAG: "
+	f = open("Tag.txt", "rt")
+	for s in f.readlines():
+		temp = temp + " " + s[0:len(s)-1]
+	app.label["text"]= temp
+	app.label2["text"] = "Não associado"
+	app.label2["fg"] = "red"
+signal.signal(signal.SIGINT, signal_handler)
 app.mainloop()
+os.kill(childpid, signal.SIGQUIT)
