@@ -10,11 +10,10 @@
 
 FILE *log;
 struct timeval  tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8;
-bool comprando = true, debug = true;
+bool debug = true;
 int count=1, n_cycles = 2;
 int8_t n_antenas = 2;
 uint8_t a = 0;
-char *pid;
 
 typedef struct reader_s {
 	tag1_t tag_scan1;
@@ -60,75 +59,60 @@ void open_log();
 int32_t handle_rfid_module_read2();
 struct list_e_tag1* catch_tags_debug(struct list_e_tag1 *list, int n_cycles);
 void set_antenna(uint8_t arg);
-void init_compra();
-
-void sleeep(int sig){
-	FILE * a = fopen("Tag.txt","w+");
-	fprintf(a, "OI aplicação!");
-	fclose(a);
-	kill(atoi(pid), SIGUSR1);
-}
-
-void finish(){
-	comprando=false;
-}
 
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
 
 int main(int argc, char **argv){
+	if(debug){
+		log = fopen("sinal de vida.txt","w+");
+		fprintf(log, "Log de Temporização:\n");
+		gettimeofday(&tv7, NULL);
+	}
 	init_reader_config();
 	init_reader();
-	struct list_e_tag1 *list = malloc(sizeof(struct list_tag1));
-	list->size=0;
-	list->head=NULL;
-	signal(SIGUSR1, sleeep);
-	pid = argv[1];
-	signal(SIGALRM, finish);
+	if(debug){
+		gettimeofday(&tv8, NULL);
+		fprintf(log, "Tempo de init_reader() && init_reader_config(): %f s\n",(double)(tv8.tv_usec - tv7.tv_usec)/1000000 + (double)(tv8.tv_sec - tv7.tv_sec));
+		fclose(log);
+	}
 	while(1){
-		sleep(1);
+		system("clear");
+		struct list_e_tag1 *list = malloc(sizeof(struct list_tag1));
+		if(debug)
+				gettimeofday(&tv7, NULL);
+				open_log();
+				fprintf(log, "\n\nCiclo %d.",count);
 		for(a=0;a<n_antenas;a++){
-			list = catch_tags(list, n_cycles);
+			if(debug){
+				fprintf(log, "\n\nAntenna %d\n-----------------------------------------------------------\n-----------------------------------------------------------",a+1);
+				list = catch_tags_debug(list, n_cycles);
+			} else {
+				list = catch_tags(list, n_cycles);
+			}
 			set_antenna(a+1);
 		}
-		if(list->size>0){
-			printf("Começando Compra!(N tags: %d)\n",list->size);
-			init_compra(list);
-			comprando=true;
-			printf("\n\nCompra Finalizada! Dormindo 2 segundos!\n");
-			sleep(2);
-		} else{
-			printf("Nada detectado, dormindo 1 segundo para tentar de novo!\n");
+		if(debug)
+				gettimeofday(&tv8, NULL);
+		printf("ciclo %d:\n\n",count++);
+		print_e_list(list);
+		if(debug){
+			fprintf(log, "\n\nTempo do ciclo: %f\n\n-----------------------------------------------------------\n-----------------------------------------------------------\n-----------------------------------------------------------\n\n\n",(double)(tv8.tv_usec - tv7.tv_usec)/1000000 + (double)(tv8.tv_sec - tv7.tv_sec));
+			fclose(log);
 		}
 		del_e_li(list);
+		free(list);
+		printf("\nDigite 's' para fazer um novo ciclo:\n");
+		while(getc(stdin)=='\n');
+		//sleep(2);
 	}
+	return 0;
 }
 
 //-------------------------------------------------------------------------------------- FIM MAIN --------------------------------------------------------------------------------------//
 //-------------------------------------------------------------------------------------- FIM MAIN --------------------------------------------------------------------------------------//
 //-------------------------------------------------------------------------------------- FIM MAIN --------------------------------------------------------------------------------------//
-
-void init_compra(struct list_e_tag1 *list){
-	printf("Carrinho passando! Captando tags.\n");
-	int n = list->size, nn=0;
-	alarm(2);
-	gettimeofday(&tv7, NULL);
-	while(comprando==true){
-		catch_tags(list, n_cycles);
-		nn=list->size;
-		if(nn>n){
-			printf("Detectado %d novas compras! Nº Total Tags: %d! finalização da compra adiada para daqui 2 segundos!\n", nn-n, list->size);
-			n=nn;
-			alarm(2);
-			gettimeofday(&tv7, NULL);
-		} else {
-			gettimeofday(&tv8, NULL);
-			printf("Nenhuma nova Tag Detectada! Nº Total Tags: %d! Compra finalizando em %f s!\n", list->size, 2-((double)(tv8.tv_usec - tv7.tv_usec)/1000000 + (double)(tv8.tv_sec - tv7.tv_sec)));
-		}
-	}
-	printf("%d Tags na compra!\n",list->size);
-}
 
 void set_antenna(uint8_t arg){
 	if((arg>0)||(arg<9)){
@@ -155,6 +139,8 @@ void open_log(){
 
 struct list_e_tag1* catch_tags(struct list_e_tag1 *list, int n_cycles){ //Função para captura de CÓDIGOS de Tags, retorna uma lista encadeada de TAGS não repetidas, a quantidade de cilos determinar quantas vezes a leitora ira fazer um pacote de TAGS para aumentar a chance de todas as TAGS serem lidas
 	int te = 1;
+	list->head=NULL;
+	list->size = 0;
 	ip_stack_t stats;
 	int32_t val=0, i=0, j=0;
 	for(int y=0; y<n_cycles;y++){
@@ -238,7 +224,6 @@ void del_e_li(struct list_e_tag1 *list){ //Da free em todos os nós da lista
 		free(n);
 		n = list->head;
 	}
-	list->head=NULL;
 	list->size=0;
 }
 

@@ -1,2 +1,262 @@
 Log de Temporização:
-Tempo de init_reader() && init_reader_config(): 0.000124 s
+Tempo de init_reader() && init_reader_config(): 0.000103 s
+
+
+Ciclo 1.
+
+Antenna 1
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+
+Tempo da 1ª Leitura: 0.077733 s
+
+
+
+
+-----------------------------------------------------------
+
+Tempo da 2ª Leitura: 0.079509 s
+
+
+
+
+Antenna 2
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+
+Tempo da 1ª Leitura: 0.022340 s
+
+
+
+
+-----------------------------------------------------------
+
+Tempo da 2ª Leitura: 0.026685 s
+
+
+
+
+Tempo do ciclo: 0.218231
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
+
+
+Ciclo 1.
+
+Antenna 1
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+
+Tempo da 1ª Leitura: 3.233909 s
+
+
+
+
+-----------------------------------------------------------
+
+Tempo da 2ª Leitura: 0.171439 s
+
+
+Tempo para adicionar 01ª tag: 0.000003 s
+Tempo para adicionar 02ª tag: 0.000001 s
+Tempo para adicionar 03ª tag: 0.000001 s
+
+
+Tempo para Adicionar todas as tags: 0.000012 s
+Tempo total da 2ª Leitura: 0.171466 s
+Tamanho da lista de TAGs após a leitura: 3
+
+
+Antenna 2
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+
+Tempo da 1ª Leitura: 0.171889 s
+
+
+Tempo para adicionar 01ª tag: 0.000002 s
+Tempo para adicionar 02ª tag: 0.000001 s
+Tempo para adicionar 03ª tag: 0.000001 s
+Tempo para adicionar 04ª tag: 0.000001 s
+Tempo para adicionar 05ª tag: 0.000001 s
+
+
+Tempo para Adicionar todas as tags: 0.000014 s
+Tempo total da 1ª Leitura: 0.171916 s
+Tamanho da lista de TAGs após a leitura: 5
+
+
+-----------------------------------------------------------
+
+Tempo da 2ª Leitura: 0.182170 s
+
+
+Tempo para adicionar 01ª tag: 0.000002 s
+Tempo para adicionar 02ª tag: 0.000002 s
+Tempo para adicionar 03ª tag: 0.000001 s
+Tempo para adicionar 04ª tag: 0.000001 s
+Tempo para adicionar 05ª tag: 0.000001 s
+Tempo para adicionar 06ª tag: 0.000001 s
+Tempo para adicionar 07ª tag: 0.000001 s
+
+
+Tempo para Adicionar todas as tags: 0.000022 s
+Tempo total da 2ª Leitura: 0.182205 s
+Tamanho da lista de TAGs após a leitura: 8
+
+
+Tempo do ciclo: 3.771738
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
+
+
+Ciclo 2.
+
+Antenna 1
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+
+Tempo da 1ª Leitura: 0.099418 s
+
+
+
+
+-----------------------------------------------------------
+
+Tempo da 2ª Leitura: 0.102447 s
+
+
+
+
+Antenna 2
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+
+Tempo da 1ª Leitura: 0.178015 s
+
+
+Tempo para adicionar 01ª tag: 0.000001 s
+Tempo para adicionar 02ª tag: 0.000001 s
+Tempo para adicionar 03ª tag: 0.000001 s
+Tempo para adicionar 04ª tag: 0.000000 s
+Tempo para adicionar 05ª tag: 0.000001 s
+Tempo para adicionar 06ª tag: 0.000001 s
+
+
+Tempo para Adicionar todas as tags: 0.000015 s
+Tempo total da 1ª Leitura: 0.178045 s
+Tamanho da lista de TAGs após a leitura: 6
+
+
+-----------------------------------------------------------
+
+Tempo da 2ª Leitura: 0.078381 s
+
+
+Tempo para adicionar 01ª tag: 0.000001 s
+Tempo para adicionar 02ª tag: 0.000001 s
+Tempo para adicionar 03ª tag: 0.000001 s
+Tempo para adicionar 04ª tag: 0.000001 s
+Tempo para adicionar 05ª tag: 0.000001 s
+Tempo para adicionar 06ª tag: 0.000002 s
+
+
+Tempo para Adicionar todas as tags: 0.000093 s
+Tempo total da 2ª Leitura: 0.078488 s
+Tamanho da lista de TAGs após a leitura: 6
+
+
+Tempo do ciclo: 0.470811
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
+
+
+Ciclo 3.
+
+Antenna 1
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+
+Tempo da 1ª Leitura: 0.097977 s
+
+
+
+
+-----------------------------------------------------------
+
+Tempo da 2ª Leitura: 0.098045 s
+
+
+
+
+Antenna 2
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+
+Tempo da 1ª Leitura: 0.078812 s
+
+
+Tempo para adicionar 01ª tag: 0.000001 s
+Tempo para adicionar 02ª tag: 0.000001 s
+Tempo para adicionar 03ª tag: 0.000001 s
+Tempo para adicionar 04ª tag: 0.000001 s
+Tempo para adicionar 05ª tag: 0.000001 s
+
+
+Tempo para Adicionar todas as tags: 0.000012 s
+Tempo total da 1ª Leitura: 0.078839 s
+Tamanho da lista de TAGs após a leitura: 5
+
+
+-----------------------------------------------------------
+
+Tempo da 2ª Leitura: 0.075631 s
+
+
+Tempo para adicionar 01ª tag: 0.000001 s
+Tempo para adicionar 02ª tag: 0.000001 s
+Tempo para adicionar 03ª tag: 0.000002 s
+Tempo para adicionar 04ª tag: 0.000001 s
+Tempo para adicionar 05ª tag: 0.000002 s
+
+
+Tempo para Adicionar todas as tags: 0.000016 s
+Tempo total da 2ª Leitura: 0.075663 s
+Tamanho da lista de TAGs após a leitura: 8
+
+
+Tempo do ciclo: 0.362704
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+
