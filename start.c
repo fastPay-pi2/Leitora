@@ -14,6 +14,7 @@ bool comprando = true, debug = true;
 int count=1, n_cycles = 2, arg, pid;
 int8_t n_antenas = 2;
 uint8_t a = 0;
+int32_t port = 1, pins = 1;
 
 typedef struct reader_s {
 	tag1_t tag_scan1;
@@ -42,7 +43,7 @@ typedef struct list_e_tag1{
 
 void print_tag1(struct tag1 *h);
 bool cmp_tag1(struct tag1 a, struct tag1 b);
-struct list_e_tag1* catch_tags(struct list_e_tag1 *list, int n_cycles);
+void catch_tags(struct list_e_tag1 *list, int n_cycles);
 void init_reader();
 void init_reader_config();
 void add_e_tag1(struct list_e_tag1 *list, struct tag1 tag);
@@ -77,17 +78,31 @@ int main(int argc, char **argv){
 	//signal(SIGUSR1, sleeep);
 	signal(SIGALRM, finish);
 	while(1){
+		del_e_li(list);
 		sleep(1);
 		for(a=0;a<n_antenas;a++){
-			list = catch_tags(list, n_cycles);
 			set_antenna(a+1);
+			catch_tags(list, n_cycles);
 		}
+		usleep(100);
 		if(list->size>0){
+			int32_t val;
+			pins = 3;
+			val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)port, (uint8_t)pins);
+			pins = 0;
 			printf("Começando Compra!(N tags: %d)\n",list->size);
 			init_compra(list);
 			comprando=true;
-			printf("\n\nCompra Finalizada! Dormindo 2 segundos!\n");
-			sleep(2);
+			printf("\n\nCompra Finalizada!\n");
+			while(list->size>0){
+				printf("Checando se a compra já saiu o portal!\n");
+				del_e_li(list);
+				for(a=0;a<n_antenas;a++){
+					set_antenna(a+1);
+					catch_tags(list, n_cycles);
+				}
+			}
+			val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)port, (uint8_t)pins);
 		} else{
 			printf("Nada detectado, dormindo 1 segundo para tentar de novo!\n");
 		}
@@ -165,15 +180,14 @@ void open_log(){
 }
 
 
-struct list_e_tag1* catch_tags(struct list_e_tag1 *list, int n_cycles){ //Função para captura de CÓDIGOS de Tags, retorna uma lista encadeada de TAGS não repetidas, a quantidade de cilos determinar quantas vezes a leitora ira fazer um pacote de TAGS para aumentar a chance de todas as TAGS serem lidas
+void catch_tags(struct list_e_tag1 *list, int n_cycles){ //Função para captura de CÓDIGOS de Tags, retorna uma lista encadeada de TAGS não repetidas, a quantidade de cilos determinar quantas vezes a leitora ira fazer um pacote de TAGS para aumentar a chance de todas as TAGS serem lidas
 	int te = 1;
-	ip_stack_t stats;
-	int32_t val=0, i=0, j=0;
+	int32_t val=0;
 	for(int y=0; y<n_cycles;y++){
 		val = handle_rfid_module_read2();
 		if(val>0){
 			te=1;
-			for(i = 0; i < val; i++) {
+			for(int i = 0; i < val; i++) {
 				if(list->size<1){
 					add_e_tag1(list,r.tag_scan1.tags1[i]);
 				} else {
@@ -182,7 +196,6 @@ struct list_e_tag1* catch_tags(struct list_e_tag1 *list, int n_cycles){ //Funç�
 			}
 		}
 	}
-	return list;
 }
 
 struct list_e_tag1* catch_tags_debug(struct list_e_tag1 *list, int n_cycles){ //Função com debug
@@ -231,7 +244,7 @@ int32_t handle_rfid_module_read2(){
 	r.msg.payload[1] = TAGLIST_SIZE; //Max number of tags/packet must be TAGLIST_SIZE
 	r.msg.payload[2] = 0x01; // Maximum elapsed time to tagging (sec)
 	r.msg.payload[3] = 0x00; // How many times reader perform inventory round [MSB]
-	r.msg.payload[4] = 0x01; // How many times reader perform inventory round [LSB]
+	r.msg.payload[4] = 0x05; // How many times reader perform inventory round [LSB]
 	int32_t val = handle_rfid_module(&r.r1, &r.msg, &r.response, &r.tag_scan1, &r.tag_scan2, &r.tag_scan3, &r.tag_scan4, &r.tag_scan5, &r.tag_scan6);
 	if (val < 0){
 		printf("\noperation failed! (%d)\n", val);

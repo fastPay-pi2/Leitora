@@ -1,9 +1,8 @@
 import tkinter as tk
-import time
 import os
 import signal
-from ctypes import *
-import subprocess
+import time
+import threading
 
 class Application(tk.Frame):
 	def __init__(self, master=None):
@@ -73,6 +72,12 @@ def signal_handler(sig, frame):
 	app.label["text"]= temp
 	app.label2["text"] = "Não associado"
 	app.label2["fg"] = "red"
+def signal_handler2(sig, frame):
+	print("oi bb\n")
+	signal.alarm(1);
+	t = threading.Timer(2, signal_handler2)
+	
 signal.signal(signal.SIGINT, signal_handler)
+t = threading.Timer(2, signal_handler2)
 app.mainloop()
 os.kill(childpid, signal.SIGQUIT)
