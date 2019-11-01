@@ -154,8 +154,29 @@ void init_compra(struct list_e_tag1 *list){
 			printf("Nenhuma nova Tag Detectada! Nº Total Tags: %d! Compra finalizando em %f s!\n", list->size, 2-((double)(tv8.tv_usec - tv7.tv_usec)/1000000 + (double)(tv8.tv_sec - tv7.tv_sec)));
 		}
 	}
-	printf("%d Tags na compra!\n",list->size);
+	char *tags[list->size+3];
+	struct node *aux = list->head;
+	tags[0] = "python3";
+	tags[1] = "send.py";
+	tags[list->size+2] = NULL;
+	for(int tem = 2; tem<(list->size+2); tem++){
+		tags[tem]=malloc(100);
+		struct tag1 tempt = aux->tag;
+		sprintf(tags[tem],"%x-%x-%x-%x-%x-%x-%x-%x-%x-%x-%x-%x-%x-%x",tempt.pc[0],tempt.pc[1],tempt.epc[0],tempt.epc[1],tempt.epc[2],tempt.epc[3],tempt.epc[4],tempt.epc[5],tempt.epc[6],tempt.epc[7],tempt.epc[8],tempt.epc[9],tempt.epc[10],tempt.epc[11]);
+		printf("%s\n",tags[tem]);
+		if(aux!=NULL)
+			aux=aux->next;
+	}
+	pid_t pid = fork();
+	if(pid==0){
+		printf("return:%d\n",execvp(tags[0],tags));
+		exit(1);
+	}
+	
+	for(int tem = 2; tem<list->size; tem++)
+		free(tags[tem]);
 }
+
 
 void set_antenna(uint8_t arg){
 	if((arg>0)||(arg<9)){

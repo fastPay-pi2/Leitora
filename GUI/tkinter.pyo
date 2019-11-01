@@ -3,6 +3,14 @@ import os
 import signal
 import time
 import threading
+import requests
+import json
+
+end_point_prod = "http://localhost:3000/product"
+entry_point_item = "http://localhost:3000/item"
+entry_point_cart = "http://127.0.0.1:5000/api/cart/"
+tag = ""
+dict_pur = {}
 
 class Application(tk.Frame):
 	def __init__(self, master=None):
@@ -16,11 +24,12 @@ class Application(tk.Frame):
 		self.label.pack(side="top")
 		self.oi = tk.Scrollbar(self)
 		self.oi.pack(side='right')
-		self.s = tk.Entry(self)
+		self.s = tk.Entry(self, width = 45)
 		self.s.insert('end',"Pesquisar...")
 		self.s.bind('<KeyRelease>', self.refine)
 		self.s.pack()
-		self.listbox = tk.Listbox(self, yscrollcommand=self.oi.set)
+		self.s.bind("<1>", self.handle_click)
+		self.listbox = tk.Listbox(self, yscrollcommand=self.oi.set, width = 45)
 		self.listbox.pack(side='top', fill='x')
 		self.postt = tk.Button(self)
 		self.postt["text"] = "Associar à TAG"
@@ -29,29 +38,81 @@ class Application(tk.Frame):
 		self.oi.config(command=self.listbox.yview)
 		self.quit = tk.Button(self, text="SAIR", fg="red",command=self.master.destroy)
 		self.quit.pack(side="bottom")
-		self.refine()
+		self.cart = tk.Button(self)
+		self.cart["text"] = "Associar a um carrinho"
+		self.cart["command"] = self.cartt
+		self.cart.pack(side="bottom")
+		self.populate()
+		self.start()
 		self.label2 = tk.Label(self, text="Não associado")
 		self.label2.pack(side="bottom")
 		self.label2["fg"] = "red"
 	
 	def refine(self, *args):
-		str="";
-		if(self.s.get()!="Pesquisar..."):
-			str = self.s.get()
+		strr = self.s.get()
 		self.listbox.delete(0, "end")
-		f = open("produtos.txt", "rt")
-		for s in f.readlines():
-			if(str.lower() in s.lower()):
-				self.listbox.insert("end",s[0:len(s)-1]);
+		f = open("produtos.json", "r", encoding='utf8')
+		data = json.load(f)
 		f.close()
-
-	def post(self):
+		for s in data:
+			if(strr.lower() in s['name'].lower()):
+				self.listbox.insert("end",s['name']);
+		
+	def cartt(self):
+		data = {
+			"rfid": tag
+		}
+		r = requests.post(entry_point_cart, json = data)
+		if 'error' in r.json().keys():
+			self.label2['text'] = "Carrinho já cadastrado"
+		
+	def populate(self):
+		global dict_pur
 		try:
-			print("Tentando associar '"+self.listbox.get(self.listbox.curselection()[0]) + "'com '" + self.label["text"] + "'")
+			r = requests.get(end_point_prod)
+		except:
+			self.master.destroy()
+		f = open("produtos.json", "w+", encoding='utf8')
+		j =r.json()
+		for s in j:
+			s['name'] =s['name'].strip()
+			dict_pur[s['name']]=s['id']
+		json.dump(sorted(j, key=lambda k: k['name']), f, sort_keys=True)
+		f.close();
+		
+	def start(self):
+		f = open("produtos.json", "r", encoding='utf8')
+		data = json.load(f)
+		f.close()
+		for s in data:
+			self.listbox.insert("end",s['name']);
+		
+	def post(self):
+		print('------------------------------------------------\n\n\n\n')
+		print(self.listbox.get(self.listbox.curselection()[0]))
+		f = open("produtos.json", "r", encoding='utf8')
+		data = json.load(f)
+		f.close()
+		try:
+			idprod = 0
+			if self.listbox.get(self.listbox.curselection()[0]) in dict_pur.keys():
+				idprod = int(dict_pur[self.listbox.get(self.listbox.curselection()[0])])
+			data = {
+				"rfid": tag,
+				"expirationDate": "2020-12-12",
+				"idProduct": idprod
+			}
+			r = requests.post(entry_point_item, json = data)
+			print(r.raise_for_status())
 			self.label2["text"] = "Associado"
 			self.label2["fg"] = "green"
-		except:
-			print("nada selecionado")
+		except KeyError:
+			print("Produto não cadastrado")
+		except Exception as ex:
+			print(ex)
+		
+	def handle_click(self, event):
+		self.s.delete(0,'end')
 		
 
 
@@ -62,18 +123,22 @@ if(childpid==0):
 	os.execvp(cmd[0],cmd)
 	exit(1);
 root = tk.Tk()
-root.geometry("400x350")
+root.geometry("400x400")
 app = Application(master=root)
 def signal_handler(sig, frame):
+	global tag
+	tag = ""
 	temp = "TAG: "
 	f = open("Tag.txt", "rt")
 	for s in f.readlines():
-		temp = temp + " " + s[0:len(s)-1]
+		tag = tag + "-" + s[:(len(s)-1)]
+	tag = tag[1:]
+	temp = temp + tag
 	app.label["text"]= temp
 	app.label2["text"] = "Não associado"
 	app.label2["fg"] = "red"
+	f.close()
 def signal_handler2(sig, frame):
-	print("oi bb\n")
 	signal.alarm(1);
 	t = threading.Timer(2, signal_handler2)
 	
