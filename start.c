@@ -7,12 +7,13 @@
 #include <stdbool.h>
 #include <time.h>
 #include <signal.h>
+#include <sys/types.h>
 
 FILE *log;
 struct timeval  tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8;
 bool comprando = true, debug = true;
 int count=1, n_cycles = 2, arg, pid;
-int8_t n_antenas = 2;
+int8_t n_antenas = 1;
 uint8_t a = 0;
 int32_t port = 1, pins = 1;
 
@@ -62,6 +63,10 @@ void finish(){
 	comprando=false;
 }
 
+void erro_compra(){
+	
+}
+
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
@@ -77,6 +82,7 @@ int main(int argc, char **argv){
 	list->head=NULL;
 	//signal(SIGUSR1, sleeep);
 	signal(SIGALRM, finish);
+	signal(SIGUSR1, erro_compra);
 	while(1){
 		del_e_li(list);
 		sleep(1);
@@ -154,11 +160,13 @@ void init_compra(struct list_e_tag1 *list){
 			printf("Nenhuma nova Tag Detectada! Nº Total Tags: %d! Compra finalizando em %f s!\n", list->size, 2-((double)(tv8.tv_usec - tv7.tv_usec)/1000000 + (double)(tv8.tv_sec - tv7.tv_sec)));
 		}
 	}
-	char *tags[list->size+3];
+	char *tags[list->size+4];
 	struct node *aux = list->head;
 	tags[0] = "python3";
 	tags[1] = "send.py";
-	tags[list->size+2] = NULL;
+	tags[list->size+2] = malloc(100);
+	sprintf(tags[list->size+2],"%d",getpid());
+	tags[list->size+3] = NULL;
 	for(int tem = 2; tem<(list->size+2); tem++){
 		tags[tem]=malloc(100);
 		struct tag1 tempt = aux->tag;
@@ -173,7 +181,7 @@ void init_compra(struct list_e_tag1 *list){
 		exit(1);
 	}
 	
-	for(int tem = 2; tem<list->size; tem++)
+	for(int tem = 2; tem<(list->size+3); tem++)
 		free(tags[tem]);
 }
 
@@ -333,6 +341,19 @@ void init_reader(){ //inicia o socket???(a definir)
 	if (val)
 	{
 		printf("Error creating reader session.\n");
+		exit(1);
+	}
+	r.msg.code = SET_TX_POWER_LEVEL;
+	r.msg.payload_length[0] = 0x00;
+	r.msg.payload_length[1] = 0x02;
+	// MSB of the tx power level
+	r.msg.payload[0] = (((20 * 10) >> 8) & 0x00ff);
+	// LSB of the tx power level
+	r.msg.payload[1] = ((20 * 10) & 0x00ff);
+	val = handle_rfid_module(&r.r2, &r.msg, &r.response);
+	if (val)
+	{
+		printf("Error setting 20 dbm.\n");
 		exit(1);
 	}
 }
