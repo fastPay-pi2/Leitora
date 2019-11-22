@@ -21,7 +21,7 @@ pid = sys.argv[len(sys.argv)-1]
 print(lis)
 print(len(sys.argv))
 
-url = "http://192.168.100.119:5000/api/purchase/"
+url = "http://fastpaypi2.ml:5000/api/purchase/"
 data = {
 	'items': lis
 }

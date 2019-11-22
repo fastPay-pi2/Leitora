@@ -6,9 +6,9 @@ import threading
 import requests
 import json
 
-end_point_prod = "http://localhost:3000/product"
-entry_point_item = "http://localhost:3000/item"
-entry_point_cart = "http://127.0.0.1:5000/api/cart/"
+end_point_prod = "http://fastpaypi2.ml:3000/product"
+entry_point_item = "http://fastpaypi2.ml:3000/item"
+entry_point_cart = "http://fastpaypi2.ml:5000/api/cart/"
 tag = ""
 dict_pur = {}
 
