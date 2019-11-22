@@ -15,7 +15,6 @@ bool comprando = true, debug = true;
 int count=1, n_cycles = 2, arg, pid;
 int8_t n_antenas = 1;
 uint8_t a = 0;
-int32_t port = 1, pins = 1;
 
 typedef struct reader_s {
 	tag1_t tag_scan1;
@@ -64,7 +63,9 @@ void finish(){
 }
 
 void erro_compra(){
-	
+	int32_t val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)2);
+	sleep(2);
+	val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)0);
 }
 
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
@@ -72,6 +73,7 @@ void erro_compra(){
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
 
 int main(int argc, char **argv){
+	int32_t val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)0);
 	arg=argc;
 	if(arg==2)
 		pid = atoi(argv[1]);
@@ -92,10 +94,6 @@ int main(int argc, char **argv){
 		}
 		usleep(100);
 		if(list->size>0){
-			int32_t val;
-			pins = 3;
-			val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)port, (uint8_t)pins);
-			pins = 0;
 			printf("Começando Compra!(N tags: %d)\n",list->size);
 			init_compra(list);
 			comprando=true;
@@ -108,7 +106,6 @@ int main(int argc, char **argv){
 					catch_tags(list, n_cycles);
 				}
 			}
-			val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)port, (uint8_t)pins);
 		} else{
 			printf("Nada detectado, dormindo 1 segundo para tentar de novo!\n");
 		}
@@ -143,6 +140,7 @@ void antena_8(struct list_e_tag1 *list){
 }
 
 void init_compra(struct list_e_tag1 *list){
+	int32_t val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)5);
 	printf("Carrinho passando! Captando tags.\n");
 	int n = list->size, nn=0;
 	alarm(2);
@@ -183,6 +181,7 @@ void init_compra(struct list_e_tag1 *list){
 	
 	for(int tem = 2; tem<(list->size+3); tem++)
 		free(tags[tem]);
+	val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)0);
 }
 
 
