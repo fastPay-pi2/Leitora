@@ -65,6 +65,9 @@ class Application(tk.Frame):
 		r = requests.post(entry_point_cart, json = data)
 		if 'error' in r.json().keys():
 			self.label2['text'] = "Carrinho já cadastrado"
+		else:
+			self.label2['text'] = "Carrinho cadastrado com sucesso"
+			self.label2["fg"] = "green"
 		
 	def populate(self):
 		global dict_pur

@@ -73,6 +73,7 @@ void erro_compra(){
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
 
 int main(int argc, char **argv){
+	sleep(2);
 	int32_t val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)0);
 	arg=argc;
 	if(arg==2)
@@ -132,6 +133,10 @@ void antena_8(struct list_e_tag1 *list){
 		if(arg==2)
 			kill(pid, SIGINT);
 		fclose(fp);
+		int32_t val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)8);
+		usleep(500000);
+		val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)0);
+		
 	} else if(list->size>1){
 		printf("Mais de uma Tag lida pela antena 8!\n");
 	}
