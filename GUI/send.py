@@ -25,7 +25,11 @@ url = "http://fastpaypi2.ml:5000/api/purchase/"
 data = {
 	'items': lis
 }
-r = requests.put(url, json = data)
+try:
+	r = requests.put(url, json = data)
+except:
+	os.kill(int(pid),signal.SIGUSR1)
+
 
 print(r.json())
 try:

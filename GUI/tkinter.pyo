@@ -5,6 +5,7 @@ import time
 import threading
 import requests
 import json
+import sys
 
 end_point_prod = "http://fastpaypi2.ml:3000/product"
 entry_point_item = "http://fastpaypi2.ml:3000/item"
@@ -42,7 +43,6 @@ class Application(tk.Frame):
 		self.cart["text"] = "Associar a um carrinho"
 		self.cart["command"] = self.cartt
 		self.cart.pack(side="bottom")
-		self.populate()
 		self.start()
 		self.label2 = tk.Label(self, text="Não associado")
 		self.label2.pack(side="bottom")
@@ -62,26 +62,17 @@ class Application(tk.Frame):
 		data = {
 			"rfid": tag
 		}
-		r = requests.post(entry_point_cart, json = data)
+		try:
+			r = requests.post(entry_point_cart, json = data)
+		except:
+			self.label2["text"] = "Não foi possível conectar a rede"
+			self.label2["fg"] = "orange"
+			
 		if 'error' in r.json().keys():
 			self.label2['text'] = "Carrinho já cadastrado"
 		else:
 			self.label2['text'] = "Carrinho cadastrado com sucesso"
 			self.label2["fg"] = "green"
-		
-	def populate(self):
-		global dict_pur
-		try:
-			r = requests.get(end_point_prod)
-		except:
-			self.master.destroy()
-		f = open("produtos.json", "w+", encoding='utf8')
-		j =r.json()
-		for s in j:
-			s['name'] =s['name'].strip()
-			dict_pur[s['name']]=s['id']
-		json.dump(sorted(j, key=lambda k: k['name']), f, sort_keys=True)
-		f.close();
 		
 	def start(self):
 		f = open("produtos.json", "r", encoding='utf8')
@@ -110,15 +101,36 @@ class Application(tk.Frame):
 			self.label2["text"] = "Associado"
 			self.label2["fg"] = "green"
 		except KeyError:
-			print("Produto não cadastrado")
+			self.label2["text"] = "Produto não cadastrado"
+			self.label2["fg"] = "orange"
 		except Exception as ex:
+			self.label2["text"] = "Não foi possível conectar a rede"
+			self.label2["fg"] = "orange"
 			print(ex)
 		
 	def handle_click(self, event):
 		self.s.delete(0,'end')
 		
 
+def getProducts():
+	print("Conectando...")
+	try:
+		r = requests.get(end_point_prod)
+		f = open("produtos.json", "w+", encoding='utf8')
+		j =r.json()
+		for s in j:
+			s['name'] =s['name'].strip()
+			dict_pur[s['name']]=s['id']
+		json.dump(sorted(j, key=lambda k: k['name']), f, sort_keys=True)
+		f.close();
+		return False;
+	except:
+		return True;
 
+while(getProducts()):
+	print("Rede não encontrada!")
+	time.sleep(5)
+print("Conectado!\n\n")
 
 cmd = ["../start",str(os.getpid())]
 childpid = os.fork();

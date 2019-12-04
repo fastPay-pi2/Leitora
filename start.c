@@ -63,9 +63,12 @@ void finish(){
 }
 
 void erro_compra(){
+	for(int i = 0; i<10;i++){
 	int32_t val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)2);
-	sleep(2);
+	usleep(100000);
 	val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)0);
+	usleep(100000);
+	}
 }
 
 //-------------------------------------------------------------------------------------- INÍCIO MAIN --------------------------------------------------------------------------------------//
@@ -345,7 +348,10 @@ void init_reader(){ //inicia o socket???(a definir)
 	if (val)
 	{
 		printf("Error creating reader session.\n");
-		exit(1);
+		while(~Gen2ReaderCreate("192.168.5.10", &r.r1)){
+			sleep(2);
+			printf("Tentando criar seção novamente!");
+		}
 	}
 	r.msg.code = SET_TX_POWER_LEVEL;
 	r.msg.payload_length[0] = 0x00;
@@ -358,7 +364,10 @@ void init_reader(){ //inicia o socket???(a definir)
 	if (val)
 	{
 		printf("Error setting 20 dbm.\n");
-		exit(1);
+		while(handle_rfid_module(&r.r2, &r.msg, &r.response)){
+			sleep(2);
+			printf("Tentando criar seção novamente!");
+		}
 	}
 }
 
@@ -369,7 +378,10 @@ void init_reader_config(){
 	if (val)
 	{
 		printf("Error creating reader session.\n");
-		exit(1);
+		while(~Gen2ReaderCreate("192.168.5.10", &r.r2)){
+			sleep(2);
+			printf("Tentando criar seção novamente!");
+		}
 	}
 }
 
