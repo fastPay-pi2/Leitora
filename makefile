@@ -7,5 +7,7 @@ start.o: start.c reader_api.h
 reader_api.o: reader_api.c reader_api.h
 	gcc $(CFLAGS) -c reader_api.c
 
+
+
 clean:
 	rm -f *.o reciprocal

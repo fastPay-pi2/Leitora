@@ -13,7 +13,7 @@ FILE *log;
 struct timeval  tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8;
 bool comprando = true, debug = true;
 int count=1, n_cycles = 2, arg, pid;
-int8_t n_antenas = 1;
+int8_t n_antenas = 7;
 uint8_t a = 0;
 
 typedef struct reader_s {
@@ -64,7 +64,7 @@ void finish(){
 
 void erro_compra(){
 	for(int i = 0; i<10;i++){
-	int32_t val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)2);
+	int32_t val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)8);
 	usleep(100000);
 	val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)0);
 	usleep(100000);
@@ -91,7 +91,7 @@ int main(int argc, char **argv){
 	signal(SIGUSR1, erro_compra);
 	while(1){
 		del_e_li(list);
-		sleep(1);
+		usleep(500000);
 		for(a=0;a<n_antenas;a++){
 			set_antenna(a+1);
 			catch_tags(list, n_cycles);
@@ -151,7 +151,7 @@ void init_compra(struct list_e_tag1 *list){
 	int32_t val = Gen2ReaderGPIOWrite(&r.r1, (uint8_t)1, (uint8_t)5);
 	printf("Carrinho passando! Captando tags.\n");
 	int n = list->size, nn=0;
-	alarm(2);
+	alarm(4);
 	gettimeofday(&tv7, NULL);
 	while(comprando==true){
 		catch_tags(list, n_cycles);
@@ -159,7 +159,7 @@ void init_compra(struct list_e_tag1 *list){
 		if(nn>n){
 			printf("Detectado %d novas compras! Nº Total Tags: %d! finalização da compra adiada para daqui 2 segundos!\n", nn-n, list->size);
 			n=nn;
-			alarm(2);
+			alarm(3);
 			gettimeofday(&tv7, NULL);
 		} else {
 			gettimeofday(&tv8, NULL);
@@ -357,9 +357,9 @@ void init_reader(){ //inicia o socket???(a definir)
 	r.msg.payload_length[0] = 0x00;
 	r.msg.payload_length[1] = 0x02;
 	// MSB of the tx power level
-	r.msg.payload[0] = (((20 * 10) >> 8) & 0x00ff);
+	r.msg.payload[0] = (((17 * 10) >> 8) & 0x00ff);
 	// LSB of the tx power level
-	r.msg.payload[1] = ((20 * 10) & 0x00ff);
+	r.msg.payload[1] = ((17 * 10) & 0x00ff);
 	val = handle_rfid_module(&r.r2, &r.msg, &r.response);
 	if (val)
 	{

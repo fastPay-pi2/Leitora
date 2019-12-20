@@ -65,7 +65,7 @@ class Application(tk.Frame):
 		try:
 			r = requests.post(entry_point_cart, json = data)
 		except:
-			self.label2["text"] = "Não foi possível conectar a rede"
+			self.label2["text"] = "Não foi possível fazer a associação"
 			self.label2["fg"] = "orange"
 			
 		if 'error' in r.json().keys():
@@ -82,6 +82,7 @@ class Application(tk.Frame):
 			self.listbox.insert("end",s['name']);
 		
 	def post(self):
+		global dict_pur
 		print('------------------------------------------------\n\n\n\n')
 		print(self.listbox.get(self.listbox.curselection()[0]))
 		f = open("produtos.json", "r", encoding='utf8')
@@ -113,6 +114,7 @@ class Application(tk.Frame):
 		
 
 def getProducts():
+	global dict_pur
 	print("Conectando...")
 	try:
 		r = requests.get(end_point_prod)
